@@ -20,6 +20,9 @@ public class MotionProfile {
 	private double m_maxAcceleration;
 	private double m_distance;
 	
+	private double[][] m_points;
+	private double m_intervalSize;
+	
 	public MotionProfile(double maxVelocity, double maxAcceleration, double distance) {
 		/**
 		 * @param maxVelocity: Maximum allowed velocity in rev/ms
@@ -40,6 +43,21 @@ public class MotionProfile {
 		m_timeEndCruise = (m_cruiseDistance/m_cruiseVelocity)+m_timeAccelerationPeriod;
 		m_timeEnd = m_timeEndCruise+m_timeAccelerationPeriod;
 	}
-	//TODO get points
-	//meeting ended lol
+	
+	public double[][] getPoints(int totalPoints) {	
+		m_intervalSize = m_timeEnd/totalPoints;
+		for (int i=0; i<m_timeEnd; i += m_intervalSize) {
+			if (i < m_timeAccelerationPeriod) {
+				m_points[i][0] = i;
+				m_points[0][i] = m_maxAcceleration*i;
+			} else if (i > m_timeAccelerationPeriod && i < m_timeEndCruise) {
+				m_points[i][0] = i;
+				m_points[0][i] = m_cruiseVelocity;
+			} else if (i > m_timeEndCruise && i < m_timeEnd) {
+				m_points[i][0] = i;
+				m_points[0][i] = -m_maxAcceleration*i+(m_cruiseVelocity+m_maxAcceleration*m_timeEndCruise);
+			}
+		}
+		return m_points;
+	}
 }
