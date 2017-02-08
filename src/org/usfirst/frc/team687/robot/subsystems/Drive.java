@@ -6,8 +6,10 @@ import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,6 +23,8 @@ public class Drive extends Subsystem {
 	private final CANTalon m_followerTalonL2;
 	
 	private final DoubleSolenoid m_shifter;
+	
+	private final AHRS m_nav;
 	
 	public Drive() {
 		super();
@@ -40,6 +44,8 @@ public class Drive extends Subsystem {
 		m_followerTalonL2.changeControlMode(TalonControlMode.Follower);
 		
 		m_shifter = new DoubleSolenoid(RobotMap.shifterPort1, RobotMap.shifterPort2);
+		
+		m_nav = new AHRS(SerialPort.Port.kMXP);
 	}
 
 	@Override
@@ -66,5 +72,22 @@ public class Drive extends Subsystem {
 	
 	public void shiftDown() {
 		m_shifter.set(Value.kReverse);
+	}
+	
+	public double getPosition() {
+		return (m_encoderTalonR.getPosition() + m_encoderTalonL.getPosition()) / 2;
+	}
+	
+	public double getYaw() {
+		return m_nav.getYaw();
+	}
+	
+	public void resetGyro() {
+		m_nav.reset();
+	}
+	
+	public void resetEncoders() {
+		m_encoderTalonR.reset();
+		m_encoderTalonL.reset();
 	}
 }
