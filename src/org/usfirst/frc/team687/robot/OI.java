@@ -10,6 +10,7 @@ import org.usfirst.frc.team687.robot.commands.conveyor.*;
 import org.usfirst.frc.team687.robot.commands.drive.*;
 import org.usfirst.frc.team687.robot.commands.gearmanip.*;
 import org.usfirst.frc.team687.robot.commands.intake.*;
+import org.usfirst.frc.team687.robot.commands.shooter.SetSpeed;
 import org.usfirst.frc.team687.robot.constants.*;
 
 
@@ -40,6 +41,7 @@ public class OI {
 	public JoystickButton intakeArticUp_1;
 	public JoystickButton intakeArticDown_2;
 	public JoystickButton dropGearBackOff_10;
+	public JoystickButton setShooterMax_11;
 	
 	public OI() {
 		driveLeftJoy = new Joystick(0);
@@ -87,6 +89,9 @@ public class OI {
 		intakeArticUp_1.whenPressed(new IntakeArticUp());
 		intakeArticDown_2 = new JoystickButton(articJoy, 2);
 		intakeArticDown_2.whenPressed(new IntakeArticDown());
+		
+		setShooterMax_11 = new JoystickButton(articJoy, 11);
+		setShooterMax_11.whileHeld(new SetSpeed(ShooterConstants.maxRPM));
 	}
 	
 	public double getLeftY() {

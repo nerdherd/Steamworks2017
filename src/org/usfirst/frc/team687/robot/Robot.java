@@ -5,6 +5,7 @@ import org.usfirst.frc.team687.robot.subsystems.Conveyor;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
 import org.usfirst.frc.team687.robot.subsystems.GearManipulation;
 import org.usfirst.frc.team687.robot.subsystems.Intake;
+import org.usfirst.frc.team687.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Intake intake;
 	public static GearManipulation gearManip;
+	public static Shooter shooter;
 	
 	@Override
 	public void robotInit() {
@@ -33,6 +35,7 @@ public class Robot extends IterativeRobot {
 		conveyor = new Conveyor();
 		drive = new Drive();
 		intake = new Intake();
+		shooter = new Shooter();
 		
 		compressor = new Compressor();
 		compressor.start();

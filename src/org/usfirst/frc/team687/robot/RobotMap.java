@@ -20,4 +20,5 @@ public class RobotMap {
 	public static final int intakeWheelPort = 8;
 	public static final int intakeArticPort = 9;
 	public static final int gearManipPort = 10;
+	public static final int shooterPort = 11;
 }
