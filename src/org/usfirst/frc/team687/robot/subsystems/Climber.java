@@ -25,4 +25,8 @@ public class Climber extends Subsystem {
 		m_climber.set(pow);
 	}
 	
+	public double getCurrent() {
+		return m_climber.getOutputCurrent();
+	}
+	
 }

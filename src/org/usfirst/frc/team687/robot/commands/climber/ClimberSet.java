@@ -1,6 +1,7 @@
 package org.usfirst.frc.team687.robot.commands.climber;
 
 import org.usfirst.frc.team687.robot.Robot;
+import org.usfirst.frc.team687.robot.constants.ClimberConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -20,7 +21,7 @@ public class ClimberSet extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return Robot.climber.getCurrent() > ClimberConstants.kMaxCurrent;
 	}
 	
 	
