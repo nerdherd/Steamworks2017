@@ -5,20 +5,23 @@ import org.usfirst.frc.team687.robot.constants.IntakeConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeArticUp extends Command {
-
-	public IntakeArticUp() {
+public class IntakeWheelsClosedLoop extends Command {
+	
+	private double m_desired;
+	
+	public IntakeWheelsClosedLoop(double speed) {
 		requires(Robot.intake);
+		m_desired = speed;
 	}
 	
 	@Override
 	public void execute() {
-		Robot.intake.setArticPos(IntakeConstants.kIntakeUpPos);
+		Robot.intake.setWheelsSpeed(m_desired);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return (Robot.intake.getArticPosition()-IntakeConstants.kIntakeUpPos < IntakeConstants.kIntakePosTolerance);
+		return false;
 	}
 
 }

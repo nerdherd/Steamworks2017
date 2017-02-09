@@ -6,5 +6,5 @@ public class ShooterConstants {
 	public static final double kShooterD = 0;
 	public static final double kShooterF = 0;
 	
-	public static final double maxRPM = 1000;
+	public static final double kMaxRPM = 1000;
 }

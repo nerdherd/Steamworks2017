@@ -5,20 +5,23 @@ import org.usfirst.frc.team687.robot.constants.IntakeConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeArticDown extends Command {
-
-	public IntakeArticDown() {
+public class IntakeSetPos extends Command {
+	
+	private double m_pos;
+	
+	public IntakeSetPos(double pos) {
 		requires(Robot.intake);
+		m_pos = pos;
 	}
 	
 	@Override
 	public void execute() {
-		Robot.intake.setArticPos(IntakeConstants.kIntakeDownPos);
+		Robot.intake.setArticPos(m_pos);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return (Robot.intake.getArticPosition()-IntakeConstants.kIntakeDownPos < IntakeConstants.kIntakePosTolerance);
+		return (Robot.intake.getArticPosition()-IntakeConstants.kIntakeUpPos < IntakeConstants.kIntakePosTolerance);
 	}
 
 }

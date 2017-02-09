@@ -82,16 +82,16 @@ public class OI {
 		intakeManual_7 = new JoystickButton(articJoy, 7);
 		intakeManual_7.whileHeld(new IntakeManualControl());
 		intakeWheelsIn_8 = new JoystickButton(articJoy, 8);
-		intakeWheelsIn_8.whenPressed(new IntakeInClosedLoop());
+		intakeWheelsIn_8.whenPressed(new IntakeWheelsClosedLoop(IntakeConstants.kIntakeWheelRPM));
 		intakeWheelsOut_9 = new JoystickButton(articJoy, 9);
-		intakeWheelsOut_9.whenPressed(new IntakeOutClosedLoop());
+		intakeWheelsOut_9.whenPressed(new IntakeWheelsClosedLoop(-IntakeConstants.kIntakeWheelRPM));
 		intakeArticUp_1 = new JoystickButton(articJoy, 1);
-		intakeArticUp_1.whenPressed(new IntakeArticUp());
+		intakeArticUp_1.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeUpPos));
 		intakeArticDown_2 = new JoystickButton(articJoy, 2);
-		intakeArticDown_2.whenPressed(new IntakeArticDown());
+		intakeArticDown_2.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeDownPos));
 		
 		setShooterMax_11 = new JoystickButton(articJoy, 11);
-		setShooterMax_11.whileHeld(new SetSpeed(ShooterConstants.maxRPM));
+		setShooterMax_11.whileHeld(new SetSpeed(ShooterConstants.kMaxRPM));
 	}
 	
 	public double getLeftY() {
