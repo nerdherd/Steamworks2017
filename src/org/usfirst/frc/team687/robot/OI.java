@@ -19,11 +19,12 @@ import org.usfirst.frc.team687.robot.commands.intake.IntakeManualControl;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
- */
+import org.usfirst.frc.team687.robot.commands.*;
+import org.usfirst.frc.team687.robot.constants.*;
+
+
 public class OI {
 	public Joystick driveLeftJoy;
 	public Joystick driveRightJoy;
@@ -49,6 +50,10 @@ public class OI {
 	public JoystickButton intakeWheelsOut_9;
 	public JoystickButton intakeArticUp_1;
 	public JoystickButton intakeArticDown_2;
+	
+	public JoystickButton releaseGears_1;
+	public JoystickButton secureGears_2;
+	public JoystickButton snapToTarget_3;
 	
 	public OI() {
 		driveLeftJoy = new Joystick(0);

@@ -67,5 +67,4 @@ public class Drive extends Subsystem {
 	public void shiftDown() {
 		m_shifter.set(Value.kReverse);
 	}
-	
 }
