@@ -13,12 +13,12 @@ public class GearManipMid extends Command {
 	
 	@Override
 	public void execute() {
-		Robot.gearManip.setPos(GearManipulationConstants.kGearManipUpPos);
+		Robot.gearManip.setPos(GearManipulationConstants.kGearManipMidPos);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Robot.gearManip.getPos()-GearManipulationConstants.kGearManipMidPos < GearManipulationConstants.kGearManipPosTolerance);
 	}
 
 }

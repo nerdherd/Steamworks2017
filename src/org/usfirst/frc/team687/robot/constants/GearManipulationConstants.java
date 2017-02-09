@@ -9,4 +9,6 @@ public class GearManipulationConstants {
 	public static final double kGearManipDownPos = 1000;
 	public static final double kGearManipUpPos = 1000;
 	public static final double kGearManipMidPos = 1000;
+	
+	public static final double kGearManipPosTolerance = 5;
 }

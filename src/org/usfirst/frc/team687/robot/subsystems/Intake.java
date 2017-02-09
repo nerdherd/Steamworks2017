@@ -52,6 +52,14 @@ public class Intake extends Subsystem {
 		m_wheels.set(speed);
 	}
 	
+	public double getArticPosition() {
+		return m_artic.getPosition();
+	}
+	
+	public double getWheelSpeed() {
+		return m_wheels.getSpeed();
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 	}

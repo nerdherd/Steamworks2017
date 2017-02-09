@@ -31,6 +31,10 @@ public class GearManipulation extends Subsystem {
 		m_gearManip.set(pos);
 	}
 	
+	public double getPos() {
+		return m_gearManip.getPosition();
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 	}

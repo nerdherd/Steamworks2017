@@ -18,7 +18,7 @@ public class IntakeArticDown extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Robot.intake.getArticPosition()-IntakeConstants.kIntakeDownPos < IntakeConstants.kIntakePosTolerance);
 	}
 
 }

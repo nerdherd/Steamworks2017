@@ -18,7 +18,7 @@ public class IntakeOutClosedLoop extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Robot.intake.getWheelSpeed()-IntakeConstants.kIntakeWheelRPM < -IntakeConstants.kIntakeRPMTolerance);
 	}
 
 }

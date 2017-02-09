@@ -15,4 +15,7 @@ public class IntakeConstants {
 	
 	public static final double kIntakeDownPos = 100;
 	public static final double kIntakeUpPos = 1000;
+	
+	public static final double kIntakePosTolerance = 5;
+	public static final double kIntakeRPMTolerance = 10;
 }

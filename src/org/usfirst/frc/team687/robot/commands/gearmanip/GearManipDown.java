@@ -2,6 +2,7 @@ package org.usfirst.frc.team687.robot.commands.gearmanip;
 
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.GearManipulationConstants;
+import org.usfirst.frc.team687.robot.constants.IntakeConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +19,7 @@ public class GearManipDown extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Robot.gearManip.getPos()-GearManipulationConstants.kGearManipDownPos < GearManipulationConstants.kGearManipPosTolerance);
 	}
 
 }
