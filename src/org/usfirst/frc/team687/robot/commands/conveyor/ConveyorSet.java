@@ -4,15 +4,18 @@ import org.usfirst.frc.team687.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ConveyorOut extends Command {
+public class ConveyorSet extends Command {
 	
-	public ConveyorOut() {
+	private double m_desired;
+	
+	public ConveyorSet(double pow) {
 		requires(Robot.conveyor);
+		m_desired = pow;
 	}
 	
 	@Override
 	public void execute() {
-		Robot.conveyor.setPercentVoltage(-1);
+		Robot.conveyor.setPercentVoltage(m_desired);
 	}
 
 	@Override

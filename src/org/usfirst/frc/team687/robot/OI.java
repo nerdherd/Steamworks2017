@@ -1,9 +1,7 @@
 package org.usfirst.frc.team687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team687.robot.commands.climber.*;
 import org.usfirst.frc.team687.robot.commands.conveyor.*;
@@ -58,11 +56,11 @@ public class OI {
 		
 		//Right Joystick
 		gearManipUp_2 = new JoystickButton(driveRightJoy, 2);
-		gearManipUp_2.whenPressed(new GearManipUp());
+		gearManipUp_2.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipUpPos));
 		gearManipMid_3 = new JoystickButton(driveRightJoy, 3);
-		gearManipMid_3.whenPressed(new GearManipMid());
+		gearManipMid_3.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipMidPos));
 		gearManipDown_4 = new JoystickButton(driveRightJoy, 4);
-		gearManipDown_4.whenPressed(new GearManipDown());
+		gearManipDown_4.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipDownPos));
 		gearManipManual_1 = new JoystickButton(driveRightJoy, 1);
 		gearManipManual_1.whileHeld(new GearManualControl());
 		dropGearBackOff_10 = new JoystickButton(driveRightJoy, 10);
@@ -70,14 +68,14 @@ public class OI {
 		
 		// Artic Joystick
 		climberUp_3 = new JoystickButton(articJoy, 3);
-		climberUp_3.whenPressed(new ClimberUp());
+		climberUp_3.whenPressed(new ClimberSet(1));
 		climberDown_4 = new JoystickButton(articJoy, 4);
-		climberDown_4.whenPressed(new ClimberDown());
+		climberDown_4.whenPressed(new ClimberSet(-1));
 		
 		conveyorIn_5 = new JoystickButton(articJoy, 5);
-		conveyorIn_5.whenPressed(new ConveyorIn());
+		conveyorIn_5.whenPressed(new ConveyorSet(1));
 		conveyorOut_6 = new JoystickButton(articJoy, 6);
-		conveyorOut_6.whenPressed(new ConveyorOut());
+		conveyorOut_6.whenPressed(new ConveyorSet(-1));
 		
 		intakeManual_7 = new JoystickButton(articJoy, 7);
 		intakeManual_7.whileHeld(new IntakeManualControl());

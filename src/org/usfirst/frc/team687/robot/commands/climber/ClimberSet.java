@@ -4,15 +4,18 @@ import org.usfirst.frc.team687.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClimberUp extends Command {
+public class ClimberSet extends Command {
 	
-	public ClimberUp() {
+	private double m_desired;
+	
+	public ClimberSet(double pow) {
 		requires(Robot.climber);
+		m_desired = pow;
 	}
 	
 	@Override
 	public void execute() {
-		Robot.climber.setPercentVoltage(1);
+		Robot.climber.setPercentVoltage(m_desired);
 	}
 	
 	@Override
