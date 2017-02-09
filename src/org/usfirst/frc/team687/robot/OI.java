@@ -51,8 +51,6 @@ public class OI {
 		shiftUp_3.whenPressed(new ShiftUp());
 		shiftDown_4 = new JoystickButton(driveRightJoy, 4);
 		shiftDown_4.whenPressed(new ShiftDown());
-		snapToTarget_3 = new JoystickButton(driveRightJoy, 3);
-		snapToTarget_3.whenPressed(new SnapToTarget());
 		
 		//Right Joystick
 		gearManipUp_2 = new JoystickButton(driveRightJoy, 2);
