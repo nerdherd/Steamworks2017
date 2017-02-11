@@ -10,14 +10,18 @@ public class ShiftUp extends Command {
 		requires(Robot.drive);
 	}
 	
-	@Override
-	public void execute() {
+	@Override 
+	protected void initialize() {
 		Robot.drive.shiftUp();
 	}
 	
 	@Override
+	public void execute() {
+	}
+	
+	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 	
 }

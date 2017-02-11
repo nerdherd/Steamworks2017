@@ -11,13 +11,17 @@ public class ShiftDown extends Command {
 	}
 	
 	@Override
-	public void execute() {
+	protected void initialize() {
 		Robot.drive.shiftDown();
 	}
 	
 	@Override
+	public void execute() {
+	}
+	
+	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 	
 }

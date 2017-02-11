@@ -16,6 +16,7 @@ public class ClimberSet extends Command {
 	
 	@Override
 	public void execute() {
+		// TODO fix this
 		Robot.climber.setPercentVoltage(m_desired);
 	}
 	
