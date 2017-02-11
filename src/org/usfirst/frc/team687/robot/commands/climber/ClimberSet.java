@@ -24,5 +24,4 @@ public class ClimberSet extends Command {
 		return Robot.climber.getCurrent() > ClimberConstants.kMaxCurrent;
 	}
 	
-	
 }

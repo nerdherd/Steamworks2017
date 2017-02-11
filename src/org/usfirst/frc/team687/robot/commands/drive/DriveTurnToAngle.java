@@ -13,8 +13,6 @@ public class DriveTurnToAngle extends Command {
 	
 	public DriveTurnToAngle(double angle) {
 		m_angle = angle;
-		
-		// subsystem dependencies
 		requires(Robot.drive);
 	}
 

@@ -12,7 +12,7 @@ public class DriveOpenLoop extends Command {
 	
 	@Override
 	public void execute() {
-		Robot.drive.setOpenLoop(Robot.oi.getLeftY(), Robot.oi.getRightY());
+		Robot.drive.setOpenLoop(Robot.oi.getLeftY(), -Robot.oi.getRightY());
 	}
 	
 	@Override

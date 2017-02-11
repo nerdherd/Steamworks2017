@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 	
@@ -61,7 +62,7 @@ public class Drive extends Subsystem {
 		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());
 		m_followerTalonR2.set(m_encoderTalonR.getDeviceID());
 		
-		m_encoderTalonL.set(-leftPow);
+		m_encoderTalonL.set(leftPow);
 		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
 		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
 	}
@@ -72,10 +73,6 @@ public class Drive extends Subsystem {
 	
 	public void shiftDown() {
 		m_shifter.set(Value.kReverse);
-	}
-	
-	public double getPosition() {
-		return (m_encoderTalonR.getPosition() + m_encoderTalonL.getPosition()) / 2;
 	}
 	
 	public double getYaw() {
@@ -89,5 +86,15 @@ public class Drive extends Subsystem {
 	public void resetEncoders() {
 		m_encoderTalonR.reset();
 		m_encoderTalonL.reset();
+	}
+	
+	public void executeMotionProfile(double[][] points) {
+		
+	}
+	
+	public void reportState() {
+		SmartDashboard.putNumber("Speed Drive Left", m_encoderTalonL.getSpeed());
+		SmartDashboard.putNumber("Speed Drive Right", m_encoderTalonR.getSpeed());
+		SmartDashboard.putNumber("Yaw", m_nav.getYaw());
 	}
 }

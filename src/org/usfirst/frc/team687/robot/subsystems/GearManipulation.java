@@ -8,13 +8,14 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearManipulation extends Subsystem {
 	private CANTalon m_gearManip;
 	
 	public GearManipulation() {
 		m_gearManip = new CANTalon(RobotMap.gearManipPort);
-		m_gearManip.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		m_gearManip.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		m_gearManip.setP(GearManipulationConstants.kGearManipP);
 		m_gearManip.setI(GearManipulationConstants.kGearManipI);
 		m_gearManip.setD(GearManipulationConstants.kGearManipD);
@@ -33,6 +34,10 @@ public class GearManipulation extends Subsystem {
 	
 	public double getPos() {
 		return m_gearManip.getPosition();
+	}
+	
+	public void reportState() {
+		SmartDashboard.putNumber("Gear Manip Pos", m_gearManip.getPosition());
 	}
 	
 	@Override

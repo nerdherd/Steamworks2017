@@ -29,23 +29,20 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-		oi = new OI();
-				
 		climber = new Climber();
 		conveyor = new Conveyor();
 		drive = new Drive();
 		intake = new Intake();
 		shooter = new Shooter();
+		gearManip = new GearManipulation();
 		
+		oi = new OI();
+	
 		compressor = new Compressor();
 		compressor.start();
 		
 		pdp = new PowerDistributionPanel();
 	}
-	
-    public void disabledInit() {
-
-    }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -62,10 +59,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
 		SmartDashboard.putData("pdp", pdp);
-    }
-    
-    public void testPeriodic() {
-
+		gearManip.reportState();
     }
 }

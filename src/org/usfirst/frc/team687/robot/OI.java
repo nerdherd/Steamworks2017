@@ -44,37 +44,38 @@ public class OI {
 	public OI() {
 		driveLeftJoy = new Joystick(0);
 		driveRightJoy = new Joystick(1);
-		articJoy = new Joystick(2);
+		//articJoy = new Joystick(2);
 		
 		// Left Joystick
 		shiftUp_3 = new JoystickButton(driveLeftJoy, 3);
 		shiftUp_3.whenPressed(new ShiftUp());
-		shiftDown_4 = new JoystickButton(driveRightJoy, 4);
+		shiftDown_4 = new JoystickButton(driveLeftJoy, 4);
 		shiftDown_4.whenPressed(new ShiftDown());
 		
 		//Right Joystick
-		gearManipUp_2 = new JoystickButton(driveRightJoy, 2);
+		gearManipUp_2 = new JoystickButton(driveRightJoy, 7);
 		gearManipUp_2.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipUpPos));
-		gearManipMid_3 = new JoystickButton(driveRightJoy, 3);
+		gearManipMid_3 = new JoystickButton(driveRightJoy, 9);
 		gearManipMid_3.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipMidPos));
-		gearManipDown_4 = new JoystickButton(driveRightJoy, 4);
+		gearManipDown_4 = new JoystickButton(driveRightJoy, 11);
 		gearManipDown_4.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipDownPos));
 		gearManipManual_1 = new JoystickButton(driveRightJoy, 1);
 		gearManipManual_1.whileHeld(new GearManualControl());
-		dropGearBackOff_10 = new JoystickButton(driveRightJoy, 10);
-		dropGearBackOff_10.whenPressed(new DropGearBackOff());
 		
 		// Artic Joystick
+		/**
 		climberUp_3 = new JoystickButton(articJoy, 3);
 		climberUp_3.whenPressed(new ClimberSet(1));
 		climberDown_4 = new JoystickButton(articJoy, 4);
 		climberDown_4.whenPressed(new ClimberSet(-1));
-		
+		**/
+		/**
 		conveyorIn_5 = new JoystickButton(articJoy, 5);
 		conveyorIn_5.whenPressed(new ConveyorSet(1));
 		conveyorOut_6 = new JoystickButton(articJoy, 6);
 		conveyorOut_6.whenPressed(new ConveyorSet(-1));
-		
+		**/
+		/**
 		intakeManual_7 = new JoystickButton(articJoy, 7);
 		intakeManual_7.whileHeld(new IntakeManualControl());
 		intakeWheelsIn_8 = new JoystickButton(articJoy, 8);
@@ -85,9 +86,11 @@ public class OI {
 		intakeArticUp_1.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeUpPos));
 		intakeArticDown_2 = new JoystickButton(articJoy, 2);
 		intakeArticDown_2.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeDownPos));
-		
+		**/
+		/**
 		setShooterMax_11 = new JoystickButton(articJoy, 11);
 		setShooterMax_11.whileHeld(new SetSpeed(ShooterConstants.kMaxRPM));
+		**/
 	}
 	
 	public double getLeftY() {
