@@ -1,7 +1,9 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
+import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
+import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -27,6 +29,9 @@ public class Drive extends Subsystem {
 	
 	private final AHRS m_nav;
 	
+	private double leftPow, rightPow, xPow, yPow;
+	private double hyp, angle, robotAngle;
+	
 	public Drive() {
 		super();
 		m_encoderTalonR = new CANTalon(RobotMap.encoderTalonRPort);
@@ -51,7 +56,7 @@ public class Drive extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveOpenLoop());
+		setDefaultCommand(new DriveOpenLoop(DriveMode.TANK));
 	}
 	
 	public void setOpenLoop(double leftPow, double rightPow) {
@@ -65,6 +70,39 @@ public class Drive extends Subsystem {
 		m_encoderTalonL.set(leftPow);
 		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
 		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
+	}
+	
+	public void driveTankOpenLoop() {
+		leftPow = Robot.oi.getLeftY();
+		rightPow = -Robot.oi.getRightY();
+		setOpenLoop(leftPow, rightPow);
+	}
+	
+	public void driveArcadeOpenLoop() {
+		yPow = Robot.oi.getLeftY();
+		xPow = Robot.oi.getRightX();
+		leftPow = xPow+yPow;
+		rightPow = xPow-yPow; 
+		setOpenLoop(leftPow, rightPow);
+	}
+	
+	public void driveFieldCentric() {
+		yPow = Robot.oi.getLeftY();
+		xPow = Robot.oi.getRightX();
+		hyp =  Math.sqrt(xPow*xPow+yPow*yPow);
+		angle = Math.atan2(yPow, xPow);
+		robotAngle = ((-getYaw()+360) % 360)*Math.PI/180;
+		angle += robotAngle;
+		angle = angle % 2*Math.PI;
+		xPow = hyp*Math.cos(angle);
+		yPow = hyp*Math.sin(angle);
+		leftPow = xPow+yPow;
+		rightPow = xPow-yPow;
+		setOpenLoop(leftPow, rightPow);
+	}
+	
+	public void setDriveMode(DriveMode mode) {
+		setDefaultCommand(new DriveOpenLoop(mode));
 	}
 	
 	public void shiftUp() {

@@ -12,4 +12,8 @@ public class DriveConstants {
 	
 	public final static double kMaxVelocity = 0;
 	public final static double kMaxAcceleration = 0;
+	
+	public enum DriveMode {
+		TANK, ARCADE, FIELD_CENTRIC
+	}
 }
