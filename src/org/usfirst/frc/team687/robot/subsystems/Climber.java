@@ -1,6 +1,7 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
 import org.usfirst.frc.team687.robot.RobotMap;
+import org.usfirst.frc.team687.robot.commands.climber.ClimberSet;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -19,6 +20,7 @@ public class Climber extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ClimberSet(0));
 	}
 	
 	public void setPercentVoltage(double pow) {
