@@ -4,11 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team687.robot.commands.climber.*;
-import org.usfirst.frc.team687.robot.commands.conveyor.*;
 import org.usfirst.frc.team687.robot.commands.drive.*;
 import org.usfirst.frc.team687.robot.commands.gearmanip.*;
 import org.usfirst.frc.team687.robot.commands.intake.*;
-import org.usfirst.frc.team687.robot.commands.shooter.SetSpeed;
 import org.usfirst.frc.team687.robot.constants.*;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 
@@ -34,15 +32,12 @@ public class OI {
 	// Artic Joystick
 	public JoystickButton climberUp;
 	public JoystickButton climberDown;
-	public JoystickButton conveyorIn;
-	public JoystickButton conveyorOut;
 	public JoystickButton intakeManual;
 	public JoystickButton intakeWheelsIn;
 	public JoystickButton intakeWheelsOut;
 	public JoystickButton intakeArticUp;
 	public JoystickButton intakeArticDown;
 	public JoystickButton dropGearBackOff;
-	public JoystickButton setShooterMax;
 	
 	public OI() {
 		driveLeftJoy = new Joystick(0);
@@ -77,11 +72,6 @@ public class OI {
 		climberDown = new JoystickButton(articJoy, 4);
 		climberDown.whenPressed(new ClimberSet(-1));
 	
-		conveyorIn = new JoystickButton(articJoy, 5);
-		conveyorIn.whenPressed(new ConveyorSet(1));
-		conveyorOut = new JoystickButton(articJoy, 6);
-		conveyorOut.whenPressed(new ConveyorSet(-1));
-	
 		intakeManual = new JoystickButton(articJoy, 7);
 		intakeManual.whileHeld(new IntakeManualControl());
 		intakeWheelsIn = new JoystickButton(articJoy, 8);
@@ -92,9 +82,6 @@ public class OI {
 		intakeArticUp.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeUpPos));
 		intakeArticDown = new JoystickButton(articJoy, 2);
 		intakeArticDown.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeDownPos));
-	
-		setShooterMax = new JoystickButton(articJoy, 11);
-		setShooterMax.whileHeld(new SetSpeed(ShooterConstants.kMaxRPM));
 		**/
 	}
 	

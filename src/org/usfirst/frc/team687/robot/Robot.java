@@ -4,11 +4,9 @@ import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
 import org.usfirst.frc.team687.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 import org.usfirst.frc.team687.robot.subsystems.Climber;
-import org.usfirst.frc.team687.robot.subsystems.Conveyor;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
 import org.usfirst.frc.team687.robot.subsystems.GearManipulation;
 import org.usfirst.frc.team687.robot.subsystems.Intake;
-import org.usfirst.frc.team687.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -24,19 +22,15 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	
 	public static Climber climber;
-	public static Conveyor conveyor;
 	public static Drive drive;
 	public static Intake intake;
 	public static GearManipulation gearManip;
-	public static Shooter shooter;
 	
 	@Override
 	public void robotInit() {
 		climber = new Climber();
-		conveyor = new Conveyor();
 		drive = new Drive();
 		intake = new Intake();
-		shooter = new Shooter();
 		gearManip = new GearManipulation();
 		
 		oi = new OI();

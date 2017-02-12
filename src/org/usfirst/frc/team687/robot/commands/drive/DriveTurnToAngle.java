@@ -14,6 +14,7 @@ public class DriveTurnToAngle extends Command {
 	private double power;
 	private double m_error;
 	private double m_robotAngle;
+	private double m_counter = 0;
 	
 	public DriveTurnToAngle(double angle) {
 		m_angle = angle;
@@ -28,7 +29,7 @@ public class DriveTurnToAngle extends Command {
 
 	@Override
 	protected void execute() {
-		m_robotAngle = (360-Robot.drive.getYaw()) % 360;
+		m_robotAngle = (360+Robot.drive.getYaw()) % 360;
 		m_error = m_angle - m_robotAngle;
 		power = DriveConstants.kRotP * m_error;
 		if (power > 1) {
@@ -36,12 +37,15 @@ public class DriveTurnToAngle extends Command {
 		} else if (power < -1) {
 			power = -1;
 		}
+		if (Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance) {
+			m_counter += 1;
+		}
 		Robot.drive.setOpenLoop(power, power);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance;
+		return m_counter > DriveConstants.kDriveRotationOscillationCount;
 	}
 
 	@Override

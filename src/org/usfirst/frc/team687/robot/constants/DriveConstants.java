@@ -6,11 +6,12 @@ public class DriveConstants {
 	public final static double kDistI = 0;
 	public final static double kDistD = 0;
 	
-	public static double kRotP = 0.004;
+	public final static double kRotP = 0.004;
 	public final static double kRotI = 0;
 	public final static double kRotD = 0;
 	// Tolerance for closed loop DriveTurnToAngle command in degrees
 	public final static double kDriveRotationTolerance = 1;
+	public final static double kDriveRotationOscillationCount = 5;
 	
 	public final static double kMaxVelocity = 0;
 	public final static double kMaxAcceleration = 0;

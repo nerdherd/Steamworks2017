@@ -54,7 +54,6 @@ public class Drive extends Subsystem {
 		m_shifter = new DoubleSolenoid(RobotMap.shifterPort1, RobotMap.shifterPort2);
 		
 		m_nav = new AHRS(SerialPort.Port.kMXP);
-		SmartDashboard.putNumber("Turn P", DriveConstants.kRotP);
 	}
 
 	@Override
@@ -189,6 +188,5 @@ public class Drive extends Subsystem {
 		SmartDashboard.putNumber("Speed Drive Left", m_encoderTalonL.getSpeed());
 		SmartDashboard.putNumber("Speed Drive Right", m_encoderTalonR.getSpeed());
 		SmartDashboard.putNumber("Yaw", m_nav.getYaw());
-		DriveConstants.kRotP = SmartDashboard.getNumber("Turn P", DriveConstants.kRotP);
 	}
 }
