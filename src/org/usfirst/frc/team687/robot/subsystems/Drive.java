@@ -126,24 +126,44 @@ public class Drive extends Subsystem {
 		m_encoderTalonL.reset();
 	}
 	
-	public void executeMotionProfile(double[][] points) {
+	public void executeMotionProfile(double[][] points, double totalPoints) {
+		m_encoderTalonR.changeControlMode(TalonControlMode.MotionProfile);
+		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
+		m_encoderTalonR.clearMotionProfileTrajectories();
+		m_encoderTalonL.clearMotionProfileTrajectories();
 		
+		CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
+		CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
+		
+		for (int i = 0; i < totalPoints; i++) {
+			pointR.velocity = -points[i][1];
+			pointL.velocity = points[i][1];
+			pointR.timeDurMs = (int) points[i][0];
+			pointL.timeDurMs = (int) points[i][0];
+			pointR.profileSlotSelect = 0;
+			pointL.profileSlotSelect = 0;
+			pointL.velocityOnly = true; 
+			pointR.velocityOnly = true;
+			pointL.zeroPos = false;
+			pointR.zeroPos = false;
+			if (i == 0)
+				pointL.zeroPos = true;
+				pointR.zeroPos = true;
+
+			pointR.isLastPoint = false;
+			pointL.isLastPoint = false;
+			if ((i + 1) == totalPoints)
+				pointR.isLastPoint = true;
+				pointL.isLastPoint = true;
+
+			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
+			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
+		}
 	}
 	
 	public void reportState() {
 		SmartDashboard.putNumber("Speed Drive Left", m_encoderTalonL.getSpeed());
 		SmartDashboard.putNumber("Speed Drive Right", m_encoderTalonR.getSpeed());
 		SmartDashboard.putNumber("Yaw", m_nav.getYaw());
-		
-		if (mode == 0) {
-			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.TANK));
-		} else if (mode == 1) {
-			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.ARCADE));
-		} else if (mode == 2) {
-			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.FIELD_CENTRIC));
-		} else {
-			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.TANK));
-		}
-		mode = SmartDashboard.getNumber("Drive Mode", mode);
 	}
 }

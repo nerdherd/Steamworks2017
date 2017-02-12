@@ -13,7 +13,7 @@ public class GearManualControl extends Command {
 	
 	@Override
 	public void execute() {
-		Robot.gearManip.setPos(GearManipulationConstants.kGearManipMidPos);
+		Robot.gearManip.manualControl();
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ public class DriveDistance extends Command {
 	private double m_timeEnd;
 	private double m_intervalSize;
 	private double[][] m_points;
+	private double m_totalPoints;
 	
 	public DriveDistance(double distance, double maxVelocity, double maxAcceleration, double totalPoints) {
 		m_distance = distance;
@@ -49,13 +50,14 @@ public class DriveDistance extends Command {
 				m_points[0][i] = -m_maxAcceleration*i+(m_cruiseVelocity+m_maxAcceleration*m_timeEndCruise);
 			}
 		}
+		m_totalPoints = totalPoints;
 		requires(Robot.drive);
 	}
 	
 	@Override
 	protected void initialize() {
 		Robot.drive.resetEncoders();
-		Robot.drive.executeMotionProfile(m_points);
+		Robot.drive.executeMotionProfile(m_points, m_totalPoints);
 	}
 	
 	@Override 

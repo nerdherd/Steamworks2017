@@ -46,7 +46,7 @@ public class OI {
 	public OI() {
 		driveLeftJoy = new Joystick(0);
 		driveRightJoy = new Joystick(1);
-		//articJoy = new Joystick(2);
+		articJoy = new Joystick(2);
 		
 		// Left Joystick
 		shiftUp = new JoystickButton(driveLeftJoy, 3);
@@ -57,16 +57,17 @@ public class OI {
 		resetYaw.whenPressed(new ResetYaw());
 		
 		//Right Joystick
-		gearManipUp = new JoystickButton(driveRightJoy, 7);
-		gearManipUp.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipUpPos));
-		gearManipMid = new JoystickButton(driveRightJoy, 9);
-		gearManipMid.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipMidPos));
-		gearManipDown = new JoystickButton(driveRightJoy, 11);
-		gearManipDown.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipDownPos));
-		gearManipManual = new JoystickButton(driveRightJoy, 1);
-		gearManipManual.whileHeld(new GearManualControl());
 		
 		// Artic Joystick
+		gearManipManual = new JoystickButton(articJoy, 1);
+		gearManipManual.whileHeld(new GearManualControl());
+		gearManipUp = new JoystickButton(articJoy, 7);
+		gearManipUp.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipUpPos));
+		gearManipMid = new JoystickButton(articJoy, 9);
+		gearManipMid.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipMidPos));
+		gearManipDown = new JoystickButton(articJoy, 11);
+		gearManipDown.whenPressed(new GearManipSet(GearManipulationConstants.kGearManipDownPos));
+		
 		/**
 		climberUp = new JoystickButton(articJoy, 3);
 		climberUp.whenPressed(new ClimberSet(1));

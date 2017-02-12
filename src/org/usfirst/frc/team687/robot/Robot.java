@@ -29,8 +29,6 @@ public class Robot extends IterativeRobot {
 	public static GearManipulation gearManip;
 	public static Shooter shooter;
 	
-	public double mode = 0;
-	
 	@Override
 	public void robotInit() {
 		climber = new Climber();
@@ -46,8 +44,6 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		
 		pdp = new PowerDistributionPanel();
-		
-		SmartDashboard.putNumber("Drive Mode", mode);
 	}
 	
 	public void disabledPeriodic() {
@@ -66,6 +62,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData("pdp", pdp);
+		drive.driveArcadeOpenLoop();
 		drive.reportState();
 		gearManip.reportState();
     }

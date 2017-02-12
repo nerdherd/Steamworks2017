@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
+import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.constants.GearManipulationConstants;
 
@@ -34,6 +35,10 @@ public class GearManipulation extends Subsystem {
 	
 	public double getPos() {
 		return m_gearManip.getPosition();
+	}
+	
+	public void manualControl() {
+		setPercentVoltage(Robot.oi.getArticY());
 	}
 	
 	public void reportState() {

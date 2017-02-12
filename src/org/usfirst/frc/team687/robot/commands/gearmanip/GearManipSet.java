@@ -22,7 +22,7 @@ public class GearManipSet extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return (Robot.gearManip.getPos()-m_desired < GearManipulationConstants.kGearManipPosTolerance);
+		return false;
 	}
 
 }
