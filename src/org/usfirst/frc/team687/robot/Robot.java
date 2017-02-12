@@ -1,6 +1,7 @@
 package org.usfirst.frc.team687.robot;
 
 import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
+import org.usfirst.frc.team687.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 import org.usfirst.frc.team687.robot.subsystems.Climber;
 import org.usfirst.frc.team687.robot.subsystems.Conveyor;
@@ -12,7 +13,7 @@ import org.usfirst.frc.team687.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -45,24 +46,19 @@ public class Robot extends IterativeRobot {
 		
 		pdp = new PowerDistributionPanel();
 	}
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
 
     public void autonomousInit() {
-    	
+
     }
     
     public void autonomousPeriodic() {
-    	
+    	Scheduler.getInstance().run();
     }
     
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData("pdp", pdp);
-		drive.driveArcadeOpenLoop();
 		drive.reportState();
 		gearManip.reportState();
     }

@@ -9,6 +9,6 @@ public class GearManipulationConstants {
 	public static final double kGearManipDownPos = 0.572;
 	public static final double kGearManipUpPos = 0.286;
 	public static final double kGearManipMidPos = 0.4;
-	
+	public static final double kGearManipTimeout = 2;
 	public static final double kGearManipPosTolerance = 1;
 }

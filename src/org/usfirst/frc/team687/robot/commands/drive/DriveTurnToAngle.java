@@ -2,14 +2,18 @@ package org.usfirst.frc.team687.robot.commands.drive;
 
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
+import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTurnToAngle extends Command {
 	
 	private double m_angle;
 	private double power;
 	private double m_error;
+	private double m_robotAngle;
 	
 	public DriveTurnToAngle(double angle) {
 		m_angle = angle;
@@ -19,18 +23,25 @@ public class DriveTurnToAngle extends Command {
 	@Override
 	protected void initialize() {
 		Robot.drive.resetGyro();
+		Robot.drive.shiftDown();
 	}
 
 	@Override
 	protected void execute() {
-		m_error = m_angle - Robot.drive.getYaw();
+		m_robotAngle = (360-Robot.drive.getYaw()) % 360;
+		m_error = m_angle - m_robotAngle;
 		power = DriveConstants.kRotP * m_error;
-		Robot.drive.setOpenLoop(power, -power);
+		if (power > 1) {
+			power = 1;
+		} else if (power < -1) {
+			power = -1;
+		}
+		Robot.drive.setOpenLoop(power, power);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(m_error) <= 2;
+		return Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance;
 	}
 
 	@Override

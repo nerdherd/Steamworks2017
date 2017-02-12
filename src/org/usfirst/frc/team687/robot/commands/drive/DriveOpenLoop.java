@@ -19,10 +19,13 @@ public class DriveOpenLoop extends Command {
 		switch(m_mode) {
 		case TANK:
 			Robot.drive.driveTankOpenLoop();
+			break;
 		case ARCADE:
 			Robot.drive.driveArcadeOpenLoop();
+			break;
 		case FIELD_CENTRIC:
 			Robot.drive.driveFieldCentric();
+			break;
 		}
 	}
 	

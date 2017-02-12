@@ -3,6 +3,7 @@ package org.usfirst.frc.team687.robot.subsystems;
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 
 import com.ctre.CANTalon;
@@ -32,7 +33,6 @@ public class Drive extends Subsystem {
 	
 	private double leftPow, rightPow, xPow, yPow;
 	private double hyp, angle, robotAngle;
-	double mode = 0;
 	
 	public Drive() {
 		super();
@@ -54,10 +54,12 @@ public class Drive extends Subsystem {
 		m_shifter = new DoubleSolenoid(RobotMap.shifterPort1, RobotMap.shifterPort2);
 		
 		m_nav = new AHRS(SerialPort.Port.kMXP);
+		SmartDashboard.putNumber("Turn P", DriveConstants.kRotP);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new DriveOpenLoop(DriveMode.ARCADE));
 	}
 	
 	public void setOpenLoop(double leftPow, double rightPow) {
@@ -80,10 +82,24 @@ public class Drive extends Subsystem {
 	}
 	
 	public void driveArcadeOpenLoop() {
-		yPow = Robot.oi.getLeftY();
-		xPow = Robot.oi.getRightX();
+		yPow = -Robot.oi.getLeftY();
+		xPow = -Robot.oi.getRightX();
+		
 		leftPow = xPow+yPow;
-		rightPow = xPow-yPow; 
+		
+		if (leftPow > 1) {
+			leftPow = 1;
+		} else if (leftPow < -1) {
+			leftPow = -1;
+		}	
+		
+		rightPow = xPow-yPow;
+		
+		if (rightPow > 1) {
+			rightPow = 1;
+		} else if (rightPow < -1) {
+			rightPow = -1;
+		}
 		setOpenLoop(leftPow, rightPow);
 	}
 	
@@ -159,11 +175,20 @@ public class Drive extends Subsystem {
 			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
 			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
 		}
+		m_encoderTalonR.processMotionProfileBuffer();
+		m_encoderTalonL.processMotionProfileBuffer();
+		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable.value);
+		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
+		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());
+		m_followerTalonR2.set(m_encoderTalonR.getDeviceID());
+		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
+		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
 	}
 	
 	public void reportState() {
 		SmartDashboard.putNumber("Speed Drive Left", m_encoderTalonL.getSpeed());
 		SmartDashboard.putNumber("Speed Drive Right", m_encoderTalonR.getSpeed());
 		SmartDashboard.putNumber("Yaw", m_nav.getYaw());
+		DriveConstants.kRotP = SmartDashboard.getNumber("Turn P", DriveConstants.kRotP);
 	}
 }
