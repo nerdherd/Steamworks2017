@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot;
 
+import org.usfirst.frc.team687.robot.commands.drive.DriveDistance;
 import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
 import org.usfirst.frc.team687.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
@@ -42,7 +43,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-    	Command cmd = new DriveTurnToAngle(90);
+    	Command cmd = new DriveDistance(30.93, 9999, 51.56, 2000);
     	cmd.start();
     }
     

@@ -141,7 +141,7 @@ public class Drive extends Subsystem {
 		m_encoderTalonL.reset();
 	}
 	
-	public void executeMotionProfile(double[][] points, double totalPoints) {
+	public void initializeMotionProfile(double[][] points, double totalPoints) {
 		m_encoderTalonR.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonR.clearMotionProfileTrajectories();
@@ -161,21 +161,26 @@ public class Drive extends Subsystem {
 			pointR.velocityOnly = true;
 			pointL.zeroPos = false;
 			pointR.zeroPos = false;
-			if (i == 0)
+			if (i == 0)	{
 				pointL.zeroPos = true;
 				pointR.zeroPos = true;
+			}
 
 			pointR.isLastPoint = false;
 			pointL.isLastPoint = false;
-			if ((i + 1) == totalPoints)
+			if ((i + 1) == totalPoints)	{
 				pointR.isLastPoint = true;
 				pointL.isLastPoint = true;
+			}
 
 			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
 			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
 		}
 		m_encoderTalonR.processMotionProfileBuffer();
 		m_encoderTalonL.processMotionProfileBuffer();
+	}
+	
+	public void executeMotionProfile()	{
 		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable.value);
 		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
 		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());

@@ -38,16 +38,17 @@ public class DriveDistance extends Command {
 		m_timeEnd = m_timeEndCruise+m_timeAccelerationPeriod;
 		
 		m_intervalSize = m_timeEnd/totalPoints;
-		for (int i=0; i<m_timeEnd; i += m_intervalSize) {
+		m_points = new double[(int) totalPoints][2];
+		for (int i=0; i<m_timeEnd/m_intervalSize; i ++) {
 			if (i < m_timeAccelerationPeriod) {
-				m_points[i][0] = i;
-				m_points[0][i] = m_maxAcceleration*i;
+				m_points[i][0] = i*m_intervalSize;
+				m_points[i][1] = m_maxAcceleration*i;
 			} else if (i > m_timeAccelerationPeriod && i < m_timeEndCruise) {
-				m_points[i][0] = i;
-				m_points[0][i] = m_cruiseVelocity;
+				m_points[i][0] = i*m_intervalSize;
+				m_points[i][1] = m_cruiseVelocity;
 			} else if (i > m_timeEndCruise && i < m_timeEnd) {
-				m_points[i][0] = i;
-				m_points[0][i] = -m_maxAcceleration*i+(m_cruiseVelocity+m_maxAcceleration*m_timeEndCruise);
+				m_points[i][0] = i*m_intervalSize;
+				m_points[i][1] = -m_maxAcceleration*i+(m_cruiseVelocity+m_maxAcceleration*m_timeEndCruise);
 			}
 		}
 		m_totalPoints = totalPoints;
@@ -55,18 +56,19 @@ public class DriveDistance extends Command {
 	}
 	
 	@Override
-	protected void initialize() {
+	protected void initialize() {		
 		Robot.drive.resetEncoders();
-		Robot.drive.executeMotionProfile(m_points, m_totalPoints);
+		Robot.drive.initializeMotionProfile(m_points, m_totalPoints);
 	}
 	
 	@Override 
 	protected void execute() {
+		Robot.drive.executeMotionProfile();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 	
 }

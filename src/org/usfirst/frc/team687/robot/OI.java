@@ -2,6 +2,7 @@ package org.usfirst.frc.team687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team687.robot.commands.climber.*;
 import org.usfirst.frc.team687.robot.commands.drive.*;
@@ -63,6 +64,7 @@ public class OI {
 		gearManipDown = new JoystickButton(articJoy, 11);
 		gearManipDown.whenPressed(new GearManipSetTimer(GearManipulationConstants.kGearManipDownPos, GearManipulationConstants.kGearManipTimeout));
 		
+		SmartDashboard.putData("Drive 6 feet", new DriveDistance(30.93, 9999, 51.56, 2000));
 		/**
 		climberUp = new JoystickButton(articJoy, 3);
 		climberUp.whenPressed(new ClimberSet(1));
