@@ -42,11 +42,13 @@ public class Robot extends IterativeRobot {
 		pdp = new PowerDistributionPanel();
 	}
 
+	@Override
     public void autonomousInit() {
-    	Command cmd = new DriveDistance(30.93, 9999, 51.56, 2000);
+    	Command cmd = new DriveDistance(30.93, 9999, 51.56*3600, 10);
     	cmd.start();
     }
     
+	@Override
     public void autonomousPeriodic() {
     	Scheduler.getInstance().run();
     }

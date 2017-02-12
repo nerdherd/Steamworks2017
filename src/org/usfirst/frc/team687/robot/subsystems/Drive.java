@@ -141,7 +141,15 @@ public class Drive extends Subsystem {
 		m_encoderTalonL.reset();
 	}
 	
+	private CANTalon.MotionProfileStatus m_status = new CANTalon.MotionProfileStatus();
+	
 	public void initializeMotionProfile(double[][] points, double totalPoints) {
+		if (m_status.hasUnderrun) {
+			System.out.println("Motion Profile has underrun");
+			m_encoderTalonR.clearMotionProfileHasUnderrun();
+			m_encoderTalonL.clearMotionProfileHasUnderrun();
+		}
+		
 		m_encoderTalonR.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonR.clearMotionProfileTrajectories();
@@ -172,21 +180,24 @@ public class Drive extends Subsystem {
 				pointR.isLastPoint = true;
 				pointL.isLastPoint = true;
 			}
-
 			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
 			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
 		}
-		m_encoderTalonR.processMotionProfileBuffer();
-		m_encoderTalonL.processMotionProfileBuffer();
 	}
 	
 	public void executeMotionProfile()	{
-		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable.value);
-		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
+		m_encoderTalonR.processMotionProfileBuffer();
+		m_encoderTalonL.processMotionProfileBuffer();
+		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable);
+		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable);
 		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());
 		m_followerTalonR2.set(m_encoderTalonR.getDeviceID());
 		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
 		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
+	}
+	
+	public boolean isLastPoint() {
+		return m_status.activePointValid && m_status.activePoint.isLastPoint;
 	}
 	
 	public void reportState() {
