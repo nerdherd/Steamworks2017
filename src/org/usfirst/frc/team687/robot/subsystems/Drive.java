@@ -141,7 +141,7 @@ public class Drive extends Subsystem {
 	
 	public void resetEncoders() {
 		m_encoderTalonR.reset();
-//		m_encoderTalonL.reset();
+		m_encoderTalonL.reset();
 	}
 	
 	private CANTalon.MotionProfileStatus m_status = new CANTalon.MotionProfileStatus();
@@ -150,22 +150,22 @@ public class Drive extends Subsystem {
 		if (m_status.hasUnderrun) {
 			System.out.println("Motion Profile has underrun");
 			m_encoderTalonR.clearMotionProfileHasUnderrun();
-//			m_encoderTalonL.clearMotionProfileHasUnderrun();
+			m_encoderTalonL.clearMotionProfileHasUnderrun();
 		}
 		
 		m_encoderTalonR.changeControlMode(TalonControlMode.MotionProfile);
-//		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
+		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonR.clearMotionProfileTrajectories();
-//		m_encoderTalonL.clearMotionProfileTrajectories();
+		m_encoderTalonL.clearMotionProfileTrajectories();
 		
-		m_encoderTalonR.setF(0.987);
+		m_encoderTalonR.setF(0.12075222854);
 		m_encoderTalonR.setP(0.971);
 		m_encoderTalonR.setI(0);
 		m_encoderTalonR.setD(0);
-//		m_encoderTalonR.setF(0.987);
-//		m_encoderTalonR.setP(0.1);
-//		m_encoderTalonR.setI(0);
-//		m_encoderTalonR.setD(0);
+		m_encoderTalonR.setF(0.12075222854);
+		m_encoderTalonR.setP(0.971);
+		m_encoderTalonR.setI(0);
+		m_encoderTalonR.setD(0);
 		
 		CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 		CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
@@ -187,30 +187,30 @@ public class Drive extends Subsystem {
 			pointR.isLastPoint = (i + 1) == points.length;
 			pointL.isLastPoint = (i + 1) == points.length;
 			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
-//			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
+			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
 		}
 	}
 	
 	public void executeMotionProfile()	{
 		m_encoderTalonR.getMotionProfileStatus(m_status);
-//		m_encoderTalonL.getMotionProfileStatus(m_status);
+		m_encoderTalonL.getMotionProfileStatus(m_status);
 		if (m_status.hasUnderrun) {
 			System.out.println("Has Underrun");
 			m_encoderTalonR.clearMotionProfileHasUnderrun();
 			m_encoderTalonR.processMotionProfileBuffer();
-//			m_encoderTalonL.clearMotionProfileHasUnderrun();
-//			m_encoderTalonL.processMotionProfileBuffer();
+			m_encoderTalonL.clearMotionProfileHasUnderrun();
+			m_encoderTalonL.processMotionProfileBuffer();
 		}
 		if (m_status.activePointValid && m_status.activePoint.isLastPoint) {
 			System.out.println("m_status.activePoint.isLastPoint");
 			m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Hold.value);
-//			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
+			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
 			m_profileIsFinished = true;
 		} else {
 			m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable.value);
 			m_encoderTalonR.processMotionProfileBuffer();
-//			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
-//			m_encoderTalonL.processMotionProfileBuffer();
+			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
+			m_encoderTalonL.processMotionProfileBuffer();
 		}
 	}
 	
@@ -223,10 +223,10 @@ public class Drive extends Subsystem {
 		m_encoderTalonR.clearMotionProfileTrajectories();
 		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Disable.value);
 		m_encoderTalonR.changeControlMode(TalonControlMode.PercentVbus);
-//		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
-//		m_encoderTalonL.clearMotionProfileTrajectories();
-//		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Disable.value);
-//		m_encoderTalonL.changeControlMode(TalonControlMode.PercentVbus);
+		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
+		m_encoderTalonL.clearMotionProfileTrajectories();
+		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Disable.value);
+		m_encoderTalonL.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void reportState() {

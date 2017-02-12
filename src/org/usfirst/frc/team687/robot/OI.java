@@ -18,13 +18,13 @@ public class OI {
 	public Joystick articJoy;
 	
 	// Left Joystick
-	public JoystickButton shiftUp;
-	public JoystickButton shiftDown;
+	public JoystickButton shiftUpDriver;
+	public JoystickButton shiftDownDriver;
 	public JoystickButton resetYaw;
 	
 	// Right Joystick
-	public JoystickButton snap;
-	public JoystickButton snap1;
+	public JoystickButton snapTo180;
+	public JoystickButton snapTo0;
 	
 	public JoystickButton gearManipUp;
 	public JoystickButton gearManipMid;
@@ -50,18 +50,18 @@ public class OI {
 		articJoy = new Joystick(2);
 		
 		// Left Joystick
-		shiftUp = new JoystickButton(driveLeftJoy, 4);
-		shiftUp.whenPressed(new ShiftUp());
-		shiftDown = new JoystickButton(driveLeftJoy, 3);
-		shiftDown.whenPressed(new ShiftDown());
+		shiftUpDriver = new JoystickButton(driveLeftJoy, 4);
+		shiftUpDriver.whenPressed(new ShiftUp());
+		shiftDownDriver = new JoystickButton(driveLeftJoy, 3);
+		shiftDownDriver.whenPressed(new ShiftDown());
 		resetYaw = new JoystickButton(driveLeftJoy, 2);
 		resetYaw.whenPressed(new ResetYaw());
 		
 		//Right Joystick
-		snap = new JoystickButton(driveRightJoy, 10);
-		snap.whenPressed(new DriveTurnToAngle(180));
-		snap1 = new JoystickButton(driveRightJoy, 7);
-		snap1.whenPressed(new DriveTurnToAngle(0));
+		snapTo180 = new JoystickButton(driveRightJoy, 10);
+		snapTo180.whenPressed(new DriveTurnToAngle(180));
+		snapTo0 = new JoystickButton(driveRightJoy, 7);
+		snapTo0.whenPressed(new DriveTurnToAngle(0));
 
 		
 		// Artic Joystick
@@ -76,7 +76,7 @@ public class OI {
 		shiftUpOperator = new JoystickButton(articJoy, 4);
 		shiftUpOperator.whenPressed(new ShiftUp());
 		shiftDownOperator = new JoystickButton(articJoy, 3);
-		shiftDownOperator.whenPressed(new ShiftDown());;
+		shiftDownOperator.whenPressed(new ShiftDown());
 		
 		
 		//SmartDashboard.putData("Drive 6 feet", new DriveDistance(30.93, 9999, 51.56, 2000));
