@@ -29,8 +29,10 @@ public class DriveTurnToAngle extends Command {
 
 	@Override
 	protected void execute() {
-		m_robotAngle = (360+Robot.drive.getYaw()) % 360;
+		m_robotAngle = (360-Robot.drive.getYaw()) % 360;
 		m_error = m_angle - m_robotAngle;
+		m_error = (m_error > 180) ? m_error-360 : m_error;
+		m_error = (m_error < -180) ? m_error+360 : m_error;
 		power = DriveConstants.kRotP * m_error;
 		if (power > 1) {
 			power = 1;
@@ -40,6 +42,8 @@ public class DriveTurnToAngle extends Command {
 		if (Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance) {
 			m_counter += 1;
 		}
+		SmartDashboard.putNumber("power", power);
+		SmartDashboard.putNumber("Yaw", Robot.drive.getYaw());
 		Robot.drive.setOpenLoop(power, power);
 	}
 

@@ -20,7 +20,6 @@ public class OI {
 	public JoystickButton shiftUp;
 	public JoystickButton shiftDown;
 	public JoystickButton resetYaw;
-	public JoystickButton turn90;
 	
 	// Right Joystick
 	public JoystickButton gearManipUp;
@@ -51,8 +50,6 @@ public class OI {
 		shiftDown.whenPressed(new ShiftDown());
 		resetYaw = new JoystickButton(driveLeftJoy, 2);
 		resetYaw.whenPressed(new ResetYaw());
-		turn90 = new JoystickButton(driveLeftJoy, 10);
-		turn90.whenPressed(new DriveTurnToAngle(90));
 		
 		//Right Joystick
 		

@@ -42,7 +42,8 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-
+    	Command cmd = new DriveTurnToAngle(90);
+    	cmd.start();
     }
     
     public void autonomousPeriodic() {
