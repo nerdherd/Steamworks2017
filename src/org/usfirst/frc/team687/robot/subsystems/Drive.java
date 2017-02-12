@@ -13,6 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,6 +32,7 @@ public class Drive extends Subsystem {
 	
 	private double leftPow, rightPow, xPow, yPow;
 	private double hyp, angle, robotAngle;
+	double mode = 0;
 	
 	public Drive() {
 		super();
@@ -56,7 +58,6 @@ public class Drive extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveOpenLoop(DriveMode.TANK));
 	}
 	
 	public void setOpenLoop(double leftPow, double rightPow) {
@@ -88,7 +89,7 @@ public class Drive extends Subsystem {
 	
 	public void driveFieldCentric() {
 		yPow = Robot.oi.getLeftY();
-		xPow = Robot.oi.getRightX();
+		xPow = Robot.oi.getLeftX();
 		hyp =  Math.sqrt(xPow*xPow+yPow*yPow);
 		angle = Math.atan2(yPow, xPow);
 		robotAngle = ((-getYaw()+360) % 360)*Math.PI/180;
@@ -98,11 +99,10 @@ public class Drive extends Subsystem {
 		yPow = hyp*Math.sin(angle);
 		leftPow = xPow+yPow;
 		rightPow = xPow-yPow;
+		SmartDashboard.putNumber("angle", angle);
+		SmartDashboard.putNumber("leftPow", leftPow);
+		SmartDashboard.putNumber("rightPow", rightPow);
 		setOpenLoop(leftPow, rightPow);
-	}
-	
-	public void setDriveMode(DriveMode mode) {
-		setDefaultCommand(new DriveOpenLoop(mode));
 	}
 	
 	public void shiftUp() {
@@ -134,5 +134,16 @@ public class Drive extends Subsystem {
 		SmartDashboard.putNumber("Speed Drive Left", m_encoderTalonL.getSpeed());
 		SmartDashboard.putNumber("Speed Drive Right", m_encoderTalonR.getSpeed());
 		SmartDashboard.putNumber("Yaw", m_nav.getYaw());
+		
+		if (mode == 0) {
+			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.TANK));
+		} else if (mode == 1) {
+			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.ARCADE));
+		} else if (mode == 2) {
+			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.FIELD_CENTRIC));
+		} else {
+			Scheduler.getInstance().add(new DriveOpenLoop(DriveMode.TANK));
+		}
+		mode = SmartDashboard.getNumber("Drive Mode", mode);
 	}
 }

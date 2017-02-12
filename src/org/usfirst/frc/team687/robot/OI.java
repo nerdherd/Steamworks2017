@@ -21,9 +21,7 @@ public class OI {
 	// Left Joystick
 	public JoystickButton shiftUp;
 	public JoystickButton shiftDown;
-	public JoystickButton setModeTank;
-	public JoystickButton setModeArcade;
-	public JoystickButton setModeFieldCentric;
+	public JoystickButton resetYaw;
 	
 	// Right Joystick
 	public JoystickButton gearManipUp;
@@ -55,12 +53,8 @@ public class OI {
 		shiftUp.whenPressed(new ShiftUp());
 		shiftDown = new JoystickButton(driveLeftJoy, 4);
 		shiftDown.whenPressed(new ShiftDown());
-		setModeTank = new JoystickButton(driveLeftJoy, 7);
-		setModeTank.whenPressed(new SetDriveMode(DriveMode.TANK));
-		setModeArcade = new JoystickButton(driveLeftJoy, 9);
-		setModeArcade.whenPressed(new SetDriveMode(DriveMode.ARCADE));
-		setModeFieldCentric = new JoystickButton(driveLeftJoy, 11);
-		setModeFieldCentric.whenPressed(new SetDriveMode(DriveMode.FIELD_CENTRIC));
+		resetYaw = new JoystickButton(driveLeftJoy, 2);
+		resetYaw.whenPressed(new ResetYaw());
 		
 		//Right Joystick
 		gearManipUp = new JoystickButton(driveRightJoy, 7);

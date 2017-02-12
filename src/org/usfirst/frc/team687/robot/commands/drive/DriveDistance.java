@@ -55,17 +55,16 @@ public class DriveDistance extends Command {
 	@Override
 	protected void initialize() {
 		Robot.drive.resetEncoders();
+		Robot.drive.executeMotionProfile(m_points);
 	}
 	
 	@Override 
 	protected void execute() {
-		Robot.drive.executeMotionProfile(m_points);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		//TODO
-		return false;
+		return true;
 	}
 	
 }

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team687.robot;
 
+import org.usfirst.frc.team687.robot.commands.drive.DriveOpenLoop;
+import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 import org.usfirst.frc.team687.robot.subsystems.Climber;
 import org.usfirst.frc.team687.robot.subsystems.Conveyor;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
@@ -27,6 +29,8 @@ public class Robot extends IterativeRobot {
 	public static GearManipulation gearManip;
 	public static Shooter shooter;
 	
+	public double mode = 0;
+	
 	@Override
 	public void robotInit() {
 		climber = new Climber();
@@ -42,6 +46,8 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		
 		pdp = new PowerDistributionPanel();
+		
+		SmartDashboard.putNumber("Drive Mode", mode);
 	}
 	
 	public void disabledPeriodic() {
@@ -59,8 +65,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
 		SmartDashboard.putData("pdp", pdp);
+		drive.reportState();
 		gearManip.reportState();
     }
 }
