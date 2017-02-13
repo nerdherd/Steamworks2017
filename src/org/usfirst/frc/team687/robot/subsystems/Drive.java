@@ -78,8 +78,8 @@ public class Drive extends Subsystem {
 	}
 	
 	public void driveTankOpenLoop() {
-		leftPow = -Robot.oi.getLeftY();
-		rightPow = Robot.oi.getRightY();
+		rightPow = Robot.oi.getLeftY();
+		leftPow = -Robot.oi.getRightY();
 		setOpenLoop(leftPow, rightPow);
 	}
 	

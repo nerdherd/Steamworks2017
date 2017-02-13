@@ -46,8 +46,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
     public void autonomousInit() {
-    	Command cmd = new DriveDistance(30.93, 9999, 51.56*3600, 10);
-    	cmd.start();
+//    	Command cmd = new DriveDistance(30.93, 9999, 51.56*3600, 10);
+//    	cmd.start();
     }
     
 	@Override
