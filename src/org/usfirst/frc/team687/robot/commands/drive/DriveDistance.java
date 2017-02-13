@@ -2,6 +2,7 @@ package org.usfirst.frc.team687.robot.commands.drive;
 
 import org.usfirst.frc.team687.robot.Robot;
 //import org.usfirst.frc.team687.robot.constants.GeneratedTalonMP;
+import org.usfirst.frc.team687.robot.constants.GeneratedTalonMP;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -70,7 +71,7 @@ public class DriveDistance extends Command {
 	@Override
 	protected void initialize() {		
 		Robot.drive.resetEncoders();
-//		Robot.drive.initializeMotionProfile(GeneratedTalonMP.Points);
+		Robot.drive.initializeMotionProfile(GeneratedTalonMP.Points);
 	}
 	
 	@Override 
