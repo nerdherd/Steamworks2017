@@ -65,21 +65,25 @@ public class Drive extends Subsystem {
 	}
 	
 	public void setOpenLoop(double leftPow, double rightPow) {
-		m_encoderTalonR.changeControlMode(TalonControlMode.PercentVbus);
-		m_encoderTalonL.changeControlMode(TalonControlMode.PercentVbus);
+		m_encoderTalonR.changeControlMode(TalonControlMode.Voltage);
+		m_encoderTalonL.changeControlMode(TalonControlMode.Voltage);
 		
-		m_encoderTalonR.set(rightPow);
+		m_encoderTalonR.set(rightPow * 12.0);
 		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());
 		m_followerTalonR2.set(m_encoderTalonR.getDeviceID());
 		
-		m_encoderTalonL.set(leftPow);
+		m_encoderTalonL.set(leftPow * 12.0);
 		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
 		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
 	}
 	
+	private double squareInputs(double input)	{
+		return Math.pow(input, 2) * (input / Math.abs(input));
+	}
+	
 	public void driveTankOpenLoop() {
-		rightPow = Robot.oi.getLeftY();
-		leftPow = -Robot.oi.getRightY();
+		rightPow = squareInputs(Robot.oi.getLeftY());
+		leftPow = -squareInputs(Robot.oi.getRightY());
 		setOpenLoop(leftPow, rightPow);
 	}
 	
@@ -158,14 +162,14 @@ public class Drive extends Subsystem {
 		m_encoderTalonR.clearMotionProfileTrajectories();
 		m_encoderTalonL.clearMotionProfileTrajectories();
 		
-		m_encoderTalonR.setF(0.12075222854);
-		m_encoderTalonR.setP(0.971);
-		m_encoderTalonR.setI(0);
-		m_encoderTalonR.setD(0);
-		m_encoderTalonR.setF(0.12075222854);
-		m_encoderTalonR.setP(0.971);
-		m_encoderTalonR.setI(0);
-		m_encoderTalonR.setD(0);
+		m_encoderTalonR.setF(DriveConstants.kDistF);
+		m_encoderTalonR.setP(DriveConstants.kDistP);
+		m_encoderTalonR.setI(DriveConstants.kDistI);
+		m_encoderTalonR.setD(DriveConstants.kDistD);
+		m_encoderTalonR.setF(DriveConstants.kDistF);
+		m_encoderTalonR.setP(DriveConstants.kDistP);
+		m_encoderTalonR.setI(DriveConstants.kDistI);
+		m_encoderTalonR.setD(DriveConstants.kDistD);
 		
 		CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 		CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
