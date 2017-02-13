@@ -2,7 +2,8 @@ package org.usfirst.frc.team687.robot.constants;
 
 public class DriveConstants {
 	
-	public final static double kDistP = 0;
+	public final static double kDistF = 0.12075222854; // You probably want to put value calcs here rather than the number
+	public final static double kDistP = 0.971;
 	public final static double kDistI = 0;
 	public final static double kDistD = 0;
 	
