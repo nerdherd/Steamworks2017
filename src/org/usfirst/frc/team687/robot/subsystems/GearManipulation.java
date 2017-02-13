@@ -2,6 +2,7 @@ package org.usfirst.frc.team687.robot.subsystems;
 
 import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
+import org.usfirst.frc.team687.robot.commands.gearmanip.GearManipSetNoTimer;
 import org.usfirst.frc.team687.robot.constants.GearManipulationConstants;
 
 import com.ctre.CANTalon;
@@ -47,5 +48,6 @@ public class GearManipulation extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new GearManipSetNoTimer(GearManipulationConstants.kGearManipUpPos));
 	}
 }
