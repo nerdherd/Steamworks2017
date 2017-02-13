@@ -80,23 +80,23 @@ public class OI {
 		
 		
 		//SmartDashboard.putData("Drive 6 feet", new DriveDistance(30.93, 9999, 51.56, 2000));
-		/**
+		
 		climberUp = new JoystickButton(articJoy, 3);
-		climberUp.whenPressed(new ClimberSet(1));
-		climberDown = new JoystickButton(articJoy, 4);
-		climberDown.whenPressed(new ClimberSet(-1));
+		climberUp.whileHeld(new ClimberSet(1));
+//		climberDown = new JoystickButton(articJoy, 4);
+//		climberDown.whenPressed(new ClimberSet(-1));
 	
-		intakeManual = new JoystickButton(articJoy, 7);
-		intakeManual.whileHeld(new IntakeManualControl());
-		intakeWheelsIn = new JoystickButton(articJoy, 8);
-		intakeWheelsIn.whenPressed(new IntakeWheelsClosedLoop(IntakeConstants.kIntakeWheelRPM));
-		intakeWheelsOut = new JoystickButton(articJoy, 9);
-		intakeWheelsOut.whenPressed(new IntakeWheelsClosedLoop(-IntakeConstants.kIntakeWheelRPM));
-		intakeArticUp = new JoystickButton(articJoy, 1);
-		intakeArticUp.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeUpPos));
-		intakeArticDown = new JoystickButton(articJoy, 2);
-		intakeArticDown.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeDownPos));
-		**/
+//		intakeManual = new JoystickButton(articJoy, 7);
+//		intakeManual.whileHeld(new IntakeManualControl());
+//		intakeWheelsIn = new JoystickButton(articJoy, 8);
+//		intakeWheelsIn.whenPressed(new IntakeWheelsClosedLoop(IntakeConstants.kIntakeWheelRPM));
+//		intakeWheelsOut = new JoystickButton(articJoy, 9);
+//		intakeWheelsOut.whenPressed(new IntakeWheelsClosedLoop(-IntakeConstants.kIntakeWheelRPM));
+//		intakeArticUp = new JoystickButton(articJoy, 1);
+//		intakeArticUp.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeUpPos));
+//		intakeArticDown = new JoystickButton(articJoy, 2);
+//		intakeArticDown.whenPressed(new IntakeSetPos(IntakeConstants.kIntakeDownPos));
+		
 	}
 	
 	public double getLeftY() {
