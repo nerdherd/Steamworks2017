@@ -23,6 +23,9 @@ public class OI {
 	public JoystickButton resetYaw;
 	
 	// Right Joystick
+	public JoystickButton snap;
+	public JoystickButton snap1;
+	
 	public JoystickButton gearManipUp;
 	public JoystickButton gearManipMid;
 	public JoystickButton gearManipDown;
@@ -38,6 +41,8 @@ public class OI {
 	public JoystickButton intakeArticUp;
 	public JoystickButton intakeArticDown;
 	public JoystickButton dropGearBackOff;
+	public JoystickButton shiftUpOperator;
+	public JoystickButton shiftDownOperator;
 	
 	public OI() {
 		driveLeftJoy = new Joystick(0);
@@ -45,14 +50,19 @@ public class OI {
 		articJoy = new Joystick(2);
 		
 		// Left Joystick
-		shiftUp = new JoystickButton(driveLeftJoy, 3);
+		shiftUp = new JoystickButton(driveLeftJoy, 4);
 		shiftUp.whenPressed(new ShiftUp());
-		shiftDown = new JoystickButton(driveLeftJoy, 4);
+		shiftDown = new JoystickButton(driveLeftJoy, 3);
 		shiftDown.whenPressed(new ShiftDown());
 		resetYaw = new JoystickButton(driveLeftJoy, 2);
 		resetYaw.whenPressed(new ResetYaw());
 		
 		//Right Joystick
+		snap = new JoystickButton(driveRightJoy, 10);
+		snap.whenPressed(new DriveTurnToAngle(180));
+		snap1 = new JoystickButton(driveRightJoy, 7);
+		snap1.whenPressed(new DriveTurnToAngle(0));
+
 		
 		// Artic Joystick
 		gearManipManual = new JoystickButton(articJoy, 1);
@@ -63,8 +73,13 @@ public class OI {
 		gearManipMid.whenPressed(new GearManipSetNoTimer(GearManipulationConstants.kGearManipMidPos));
 		gearManipDown = new JoystickButton(articJoy, 11);
 		gearManipDown.whenPressed(new GearManipSetTimer(GearManipulationConstants.kGearManipDownPos, GearManipulationConstants.kGearManipTimeout));
+		shiftUpOperator = new JoystickButton(articJoy, 4);
+		shiftUpOperator.whenPressed(new ShiftUp());
+		shiftDownOperator = new JoystickButton(articJoy, 3);
+		shiftDownOperator.whenPressed(new ShiftDown());;
 		
-		SmartDashboard.putData("Drive 6 feet", new DriveDistance(30.93, 9999, 51.56, 2000));
+		
+		//SmartDashboard.putData("Drive 6 feet", new DriveDistance(30.93, 9999, 51.56, 2000));
 		/**
 		climberUp = new JoystickButton(articJoy, 3);
 		climberUp.whenPressed(new ClimberSet(1));

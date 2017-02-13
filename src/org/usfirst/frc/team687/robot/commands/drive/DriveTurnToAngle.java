@@ -4,6 +4,7 @@ import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.constants.DriveConstants.DriveMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +16,7 @@ public class DriveTurnToAngle extends Command {
 	private double m_error;
 	private double m_robotAngle;
 	private double m_counter = 0;
+	private double m_startTime;
 	
 	public DriveTurnToAngle(double angle) {
 		m_angle = angle;
@@ -23,7 +25,7 @@ public class DriveTurnToAngle extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.drive.resetGyro();
+		m_startTime = Timer.getFPGATimestamp();
 		Robot.drive.shiftDown();
 	}
 
@@ -41,6 +43,8 @@ public class DriveTurnToAngle extends Command {
 		}
 		if (Math.abs(m_error) <= DriveConstants.kDriveRotationTolerance) {
 			m_counter += 1;
+		}	else	{
+			m_counter = 0;
 		}
 		SmartDashboard.putNumber("power", power);
 		SmartDashboard.putNumber("Yaw", Robot.drive.getYaw());
@@ -49,11 +53,14 @@ public class DriveTurnToAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return m_counter > DriveConstants.kDriveRotationOscillationCount;
+		return m_counter > DriveConstants.kDriveRotationOscillationCount || Timer.getFPGATimestamp() - m_startTime > 1.5;
 	}
 
 	@Override
 	protected void end() {
+		System.out.println("HI");
+		Robot.drive.shiftUp();
+		Robot.drive.setOpenLoop(0, 0);
 	}
 
 	@Override

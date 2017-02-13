@@ -31,6 +31,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		climber = new Climber();
 		drive = new Drive();
+//		drive.resetEncoders();
+//		drive.resetGyro();
 		intake = new Intake();
 		gearManip = new GearManipulation();
 		

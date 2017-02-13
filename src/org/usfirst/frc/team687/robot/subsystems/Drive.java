@@ -34,6 +34,8 @@ public class Drive extends Subsystem {
 	private double leftPow, rightPow, xPow, yPow;
 	private double hyp, angle, robotAngle;
 	
+	private boolean m_profileIsFinished;
+	
 	public Drive() {
 		super();
 		m_encoderTalonR = new CANTalon(RobotMap.encoderTalonRPort);
@@ -54,11 +56,12 @@ public class Drive extends Subsystem {
 		m_shifter = new DoubleSolenoid(RobotMap.shifterPort1, RobotMap.shifterPort2);
 		
 		m_nav = new AHRS(SerialPort.Port.kMXP);
+		m_profileIsFinished = false;
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveOpenLoop(DriveMode.ARCADE));
+		setDefaultCommand(new DriveOpenLoop(DriveMode.TANK));
 	}
 	
 	public void setOpenLoop(double leftPow, double rightPow) {
@@ -75,8 +78,8 @@ public class Drive extends Subsystem {
 	}
 	
 	public void driveTankOpenLoop() {
-		leftPow = Robot.oi.getLeftY();
-		rightPow = -Robot.oi.getRightY();
+		leftPow = -Robot.oi.getLeftY();
+		rightPow = Robot.oi.getRightY();
 		setOpenLoop(leftPow, rightPow);
 	}
 	
@@ -121,11 +124,11 @@ public class Drive extends Subsystem {
 	}
 	
 	public void shiftUp() {
-		m_shifter.set(Value.kForward);
+		m_shifter.set(Value.kReverse);
 	}
 	
 	public void shiftDown() {
-		m_shifter.set(Value.kReverse);
+		m_shifter.set(Value.kForward);
 	}
 	
 	public double getYaw() {
@@ -138,66 +141,92 @@ public class Drive extends Subsystem {
 	
 	public void resetEncoders() {
 		m_encoderTalonR.reset();
-		m_encoderTalonL.reset();
+//		m_encoderTalonL.reset();
 	}
 	
 	private CANTalon.MotionProfileStatus m_status = new CANTalon.MotionProfileStatus();
 	
-	public void initializeMotionProfile(double[][] points, double totalPoints) {
+	public void initializeMotionProfile(double[][] points) {
 		if (m_status.hasUnderrun) {
 			System.out.println("Motion Profile has underrun");
 			m_encoderTalonR.clearMotionProfileHasUnderrun();
-			m_encoderTalonL.clearMotionProfileHasUnderrun();
+//			m_encoderTalonL.clearMotionProfileHasUnderrun();
 		}
 		
 		m_encoderTalonR.changeControlMode(TalonControlMode.MotionProfile);
-		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
+//		m_encoderTalonL.changeControlMode(TalonControlMode.MotionProfile);
 		m_encoderTalonR.clearMotionProfileTrajectories();
-		m_encoderTalonL.clearMotionProfileTrajectories();
+//		m_encoderTalonL.clearMotionProfileTrajectories();
+		
+		m_encoderTalonR.setF(0.987);
+		m_encoderTalonR.setP(0.971);
+		m_encoderTalonR.setI(0);
+		m_encoderTalonR.setD(0);
+//		m_encoderTalonR.setF(0.987);
+//		m_encoderTalonR.setP(0.1);
+//		m_encoderTalonR.setI(0);
+//		m_encoderTalonR.setD(0);
 		
 		CANTalon.TrajectoryPoint pointR = new CANTalon.TrajectoryPoint();
 		CANTalon.TrajectoryPoint pointL = new CANTalon.TrajectoryPoint();
 		
-		for (int i = 0; i < totalPoints; i++) {
+		for (int i = 0; i < points.length; i++) {
 			pointR.velocity = -points[i][1];
 			pointL.velocity = points[i][1];
-			pointR.timeDurMs = (int) points[i][0];
-			pointL.timeDurMs = (int) points[i][0];
+			pointR.position = 0;
+			pointL.position = 0;
+			pointR.timeDurMs = (int) points[i][2];
+			pointL.timeDurMs = (int) points[i][2];
 			pointR.profileSlotSelect = 0;
 			pointL.profileSlotSelect = 0;
 			pointL.velocityOnly = true; 
 			pointR.velocityOnly = true;
-			pointL.zeroPos = false;
-			pointR.zeroPos = false;
-			if (i == 0)	{
-				pointL.zeroPos = true;
-				pointR.zeroPos = true;
-			}
+			pointL.zeroPos = i==0;
+			pointR.zeroPos = i==0;
 
-			pointR.isLastPoint = false;
-			pointL.isLastPoint = false;
-			if ((i + 1) == totalPoints)	{
-				pointR.isLastPoint = true;
-				pointL.isLastPoint = true;
-			}
+			pointR.isLastPoint = (i + 1) == points.length;
+			pointL.isLastPoint = (i + 1) == points.length;
 			m_encoderTalonR.pushMotionProfileTrajectory(pointR);
-			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
+//			m_encoderTalonL.pushMotionProfileTrajectory(pointL);
 		}
 	}
 	
 	public void executeMotionProfile()	{
-		m_encoderTalonR.processMotionProfileBuffer();
-		m_encoderTalonL.processMotionProfileBuffer();
-		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable);
-		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable);
-		m_followerTalonR1.set(m_encoderTalonR.getDeviceID());
-		m_followerTalonR2.set(m_encoderTalonR.getDeviceID());
-		m_followerTalonL1.set(m_encoderTalonL.getDeviceID());
-		m_followerTalonL2.set(m_encoderTalonL.getDeviceID());
+		m_encoderTalonR.getMotionProfileStatus(m_status);
+//		m_encoderTalonL.getMotionProfileStatus(m_status);
+		if (m_status.hasUnderrun) {
+			System.out.println("Has Underrun");
+			m_encoderTalonR.clearMotionProfileHasUnderrun();
+			m_encoderTalonR.processMotionProfileBuffer();
+//			m_encoderTalonL.clearMotionProfileHasUnderrun();
+//			m_encoderTalonL.processMotionProfileBuffer();
+		}
+		if (m_status.activePointValid && m_status.activePoint.isLastPoint) {
+			System.out.println("m_status.activePoint.isLastPoint");
+			m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Hold.value);
+//			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
+			m_profileIsFinished = true;
+		} else {
+			m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Enable.value);
+			m_encoderTalonR.processMotionProfileBuffer();
+//			m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Enable.value);
+//			m_encoderTalonL.processMotionProfileBuffer();
+		}
 	}
 	
-	public boolean isLastPoint() {
-		return m_status.activePointValid && m_status.activePoint.isLastPoint;
+	public boolean profileIsFinished() {
+		return m_profileIsFinished;
+	}
+	
+	public void motionProfileEnd() {
+		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Hold.value);
+		m_encoderTalonR.clearMotionProfileTrajectories();
+		m_encoderTalonR.set(CANTalon.SetValueMotionProfile.Disable.value);
+		m_encoderTalonR.changeControlMode(TalonControlMode.PercentVbus);
+//		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Hold.value);
+//		m_encoderTalonL.clearMotionProfileTrajectories();
+//		m_encoderTalonL.set(CANTalon.SetValueMotionProfile.Disable.value);
+//		m_encoderTalonL.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void reportState() {
