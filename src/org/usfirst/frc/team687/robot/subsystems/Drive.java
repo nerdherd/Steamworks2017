@@ -88,8 +88,8 @@ public class Drive extends Subsystem {
 	}
 	
 	public void driveArcadeOpenLoop() {
-		yPow = -Robot.oi.getLeftY();
-		xPow = -Robot.oi.getRightX();
+		yPow = -squareInputs(Robot.oi.getLeftY());
+		xPow = -squareInputs(Robot.oi.getRightX());
 		
 		leftPow = xPow+yPow;
 		
