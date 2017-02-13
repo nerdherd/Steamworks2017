@@ -140,12 +140,12 @@ public class Drive extends Subsystem {
 	}
 	
 	public void resetGyro() {
-		m_nav.reset();
+		m_nav.zeroYaw();
 	}
 	
 	public void resetEncoders() {
-		m_encoderTalonR.reset();
-		m_encoderTalonL.reset();
+		m_encoderTalonR.setEncPosition(0);
+		m_encoderTalonL.setEncPosition(0);
 	}
 	
 	private CANTalon.MotionProfileStatus m_status = new CANTalon.MotionProfileStatus();
