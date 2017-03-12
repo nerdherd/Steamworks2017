@@ -18,8 +18,8 @@ public class AutoRoutineStartLoadingRed extends CommandGroup {
 		addParallel(new SetGearManipNoTimer(GearManipulationConstants.kGearManipUpPos));
 		addSequential(new ShiftDown());
 		//8 ft 0.5 in
-		//addSequential(new DriveDistance(DriveConstants.kDistanceFeederAuto1, 1000, 750, 0));
-		//addSequential(new DriveTurnToAngle(DriveConstants.kAngleFeederAutoRed, 1));
+		addSequential(new DriveDistance(DriveConstants.kDistanceFeederAuto1, 1000, 750, 0));
+		addSequential(new DriveTurnToAngle(DriveConstants.kAngleFeederAutoRed, 1));
 		addSequential(new DriveDistanceTimeout(DriveConstants.kDistanceFeederAuto2, 1000, 750, 0, 4));
 		// WIGGLE
 		addSequential(new DriveTime(0.25, 0.25, 0.125));
