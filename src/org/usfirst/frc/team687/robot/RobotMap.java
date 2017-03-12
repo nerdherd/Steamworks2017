@@ -16,6 +16,8 @@ public class RobotMap {
 	public static final int followerTalonL2Port = 3;
 	public static final int climberPort = 7;
 	public static final int gearManipPort = 10;
+	public static final int gearIntakeWheelPort = 11;
+	public static final int gearIntakeArticPort = 12;
 	
 	public static final int gearDetectorPort = 9;
 	public static final Port navPort = Port.kMXP;

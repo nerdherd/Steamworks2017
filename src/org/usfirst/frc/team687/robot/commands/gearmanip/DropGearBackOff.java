@@ -11,8 +11,8 @@ public class DropGearBackOff extends CommandGroup{
 	
 	public DropGearBackOff() {
 		addSequential(new ShiftDown());
-		addSequential(new SetGearManipTimer(GearManipulationConstants.kGearManipDownPos, 0.5));
-		addParallel(new DriveTime(-0.4, 0.4, 1.5));
+		addParallel(new SetGearManipTimer(GearManipulationConstants.kGearManipDownPos, 0.5));
+		addParallel(new DriveTime(-0.5, 0.5, 1.5));
 		addSequential(new TimeoutCommand(0.75));
 		addParallel(new SetGearManipTimer(GearManipulationConstants.kGearManipUpPos, 1.25));
 	}

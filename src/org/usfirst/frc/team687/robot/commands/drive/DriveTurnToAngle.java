@@ -15,6 +15,7 @@ public class DriveTurnToAngle extends TimeoutCommand {
 	private double m_error;
 	private double m_robotAngle;
 	private double m_counter = 0;
+	private double m_startTime;
 	
 	public DriveTurnToAngle(double angle, double time) {
 		super(time);

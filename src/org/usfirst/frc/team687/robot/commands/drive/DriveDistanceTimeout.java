@@ -12,6 +12,7 @@ public class DriveDistanceTimeout extends TimeoutCommand {
 	private double m_maxVelocity;
 	private double m_maxAcceleration;
 	private double m_kP;
+	private double m_counter = 0;
 
 	public DriveDistanceTimeout(double distance, double maxVelocity, double maxAcceleration, double kP, double time) {
 		super(time);

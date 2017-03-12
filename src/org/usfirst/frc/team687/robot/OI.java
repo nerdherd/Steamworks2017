@@ -8,7 +8,7 @@ import org.usfirst.frc.team687.robot.commands.auto.*;
 import org.usfirst.frc.team687.robot.commands.climber.*;
 import org.usfirst.frc.team687.robot.commands.drive.*;
 import org.usfirst.frc.team687.robot.commands.gearmanip.*;
-import org.usfirst.frc.team687.robot.commands.vision.VisionStream;
+//import org.usfirst.frc.team687.robot.commands.vision.VisionStream;
 import org.usfirst.frc.team687.robot.constants.*;
 
 
@@ -77,6 +77,7 @@ public class OI {
 		
 		climberDown = new JoystickButton(articJoy, 6);
 		climberDown.whileHeld(new ClimberSet(-1));
+		
 		
 		// Dashboard
 		SmartDashboard.putData("Test Left Drive", new DriveTime(1, 0, 2));

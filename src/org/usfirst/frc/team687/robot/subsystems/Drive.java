@@ -37,6 +37,11 @@ public class Drive extends Subsystem {
 	private double hyp, angle, robotAngle;
 	private double m_err = 0; 
 	
+	private double m_targetR = 0;
+	private double m_targetL = 0;
+	private double m_lastR = 0;
+	private double m_lastL = 0;
+	
 	private double m_distanceR, m_distanceL = 0;
 	
 	public Drive() {
@@ -75,6 +80,13 @@ public class Drive extends Subsystem {
 		
 		m_nav = new AHRS(SerialPort.Port.kMXP);
 		m_roborioAcc = new BuiltInAccelerometer();
+		
+		m_encoderTalonL.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
+		m_encoderTalonR.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
+		m_followerTalonL1.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
+		m_followerTalonL2.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
+		m_followerTalonR1.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
+		m_followerTalonR2.setCurrentLimit(DriveConstants.kDriveCurrentLimit);
 	}
 
 	@Override
@@ -130,7 +142,26 @@ public class Drive extends Subsystem {
 			leftPow /= max;
 			rightPow /= max;
 		}
-		setOpenLoop(leftPow, rightPow);
+		
+		m_targetL = DriveConstants.DriveAlpha*leftPow+m_lastL*(1-DriveConstants.DriveAlpha);
+		m_targetR = DriveConstants.DriveAlpha*rightPow+m_lastR*(1-DriveConstants.DriveAlpha);
+		
+		if (m_targetL > 1) {
+			m_targetL = 1;
+		} else if (m_targetL < -1) {
+			m_targetL = -1;
+		}
+		
+		if (m_targetR > 1) {
+			m_targetR = 1;
+		} else if (m_targetR < -1) {
+			m_targetR = -1;
+		}
+		
+		m_lastL = m_targetL;
+		m_lastR = m_targetR;
+		
+		setOpenLoop(m_targetL, m_targetR);
 	}
 	
 	public void driveFieldCentric() {
@@ -229,5 +260,11 @@ public class Drive extends Subsystem {
 		SmartDashboard.putNumber("Desired Enc R", m_distanceR);
 		SmartDashboard.putNumber("Desired Enc L", m_distanceL);
 		SmartDashboard.putNumber("Drive Straight Err", m_err);
+		SmartDashboard.putNumber("Current Enc R", m_encoderTalonR.getOutputCurrent());
+		SmartDashboard.putNumber("Current Enc L", m_encoderTalonL.getOutputCurrent());
+		SmartDashboard.putNumber("Current Follower R1", m_followerTalonR1.getOutputCurrent());
+		SmartDashboard.putNumber("Current Follower R2", m_followerTalonR2.getOutputCurrent());
+		SmartDashboard.putNumber("Current Follower L1", m_followerTalonL1.getOutputCurrent());
+		SmartDashboard.putNumber("Current Follower L2", m_followerTalonL2.getOutputCurrent());
 	}
 }

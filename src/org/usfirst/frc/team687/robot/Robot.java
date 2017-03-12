@@ -3,6 +3,7 @@ package org.usfirst.frc.team687.robot;
 import org.usfirst.frc.team687.robot.commands.SystemsCheck;
 import org.usfirst.frc.team687.robot.commands.auto.*;
 import org.usfirst.frc.team687.robot.commands.drive.DriveTurnToAngle;
+import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.subsystems.Climber;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
 import org.usfirst.frc.team687.robot.subsystems.GearManipulation;
@@ -58,7 +59,7 @@ public class Robot extends IterativeRobot {
 		pdp = new PowerDistributionPanel();
 		
 		autoChooser.addDefault("Do Nothing", autoDoNothing);
-		autoChooser.addObject("Red Middle", autoRedMiddle);
+		autoChooser.addObject("Red Middle", autoRedMiddle);	
 		autoChooser.addObject("Red Boiler", autoRedBoiler);
 		autoChooser.addObject("Red Feeder", autoRedFeeder);
 		autoChooser.addObject("Blue Middle", autoBlueMiddle);
@@ -66,6 +67,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Blue Feeder", autoBlueFeeder);
 		
 		SmartDashboard.putData("Autonomous Selection", autoChooser);
+		SmartDashboard.putNumber("Distance Feeder Auto 1", DriveConstants.kDistanceFeederAuto1);
+		SmartDashboard.putNumber("Distance Feeder Auto 2", DriveConstants.kDistanceFeederAuto2);
+		SmartDashboard.putNumber("Distance Mid Auto", DriveConstants.kDistanceMidAuto);
 	}
 	
 	@Override
@@ -73,6 +77,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().removeAll();
 		autoChosen = autoChooser.getSelected();
 		System.out.println(autoChosen);
+		DriveConstants.kDistanceMidAuto = SmartDashboard.getNumber("Distance Mid Auto", DriveConstants.kDistanceMidAuto);
+		DriveConstants.kDistanceFeederAuto1 = SmartDashboard.getNumber("Distance Feeder Auto 1", DriveConstants.kDistanceFeederAuto1);
+		DriveConstants.kDistanceFeederAuto2 = SmartDashboard.getNumber("Distance Feeder Auto 2", DriveConstants.kDistanceFeederAuto2);
 		drive.resetGyro();
 		drive.resetEncoders();
 		switch(autoChosen)	{

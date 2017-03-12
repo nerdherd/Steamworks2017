@@ -11,7 +11,7 @@ public class AutoRoutineStartMidRed extends CommandGroup {
 	public AutoRoutineStartMidRed() {
 		addParallel(new SetGearManipNoTimer(GearManipulationConstants.kGearManipUpPos));
 		addSequential(new ShiftDown());
-		addSequential(new DriveDistanceTimeout(DriveConstants.kDistanceMidAuto, 1000, 650, DriveConstants.kDriveStraightP, 5));
+		addSequential(new DriveDistanceTimeout(6.75, 1000, 650, DriveConstants.kDriveStraightP, 5));
 		// WIGGLE
 		addSequential(new DriveTime(0.25, 0.25, 0.125));
 		addSequential(new DriveTime(-0.25, -0.25, 0.125));

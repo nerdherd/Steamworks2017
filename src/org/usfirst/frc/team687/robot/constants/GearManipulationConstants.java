@@ -1,7 +1,7 @@
 package org.usfirst.frc.team687.robot.constants;
 
 public class GearManipulationConstants {
-	public static final double kGearManipP = 0.6;
+	public static final double kGearManipP = 0.5; //was 0.6
 	public static final double kGearManipI = 0;
 	public static final double kGearManipD = 0;
 	public static final double kGearManipF = 0;
