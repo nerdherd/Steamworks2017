@@ -75,9 +75,6 @@ public class OI {
 		climberUp = new JoystickButton(articJoy, 12);
 		climberUp.whileHeld(new Climb());
 		
-		climberDown = new JoystickButton(articJoy, 6);
-		climberDown.whileHeld(new ClimberSet(-1));
-		
 		
 		// Dashboard
 		SmartDashboard.putData("Test Left Drive", new DriveTime(1, 0, 2));

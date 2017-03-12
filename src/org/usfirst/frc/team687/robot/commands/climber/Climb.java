@@ -7,6 +7,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Climb extends CommandGroup {
 	public Climb() {
 		addSequential(new ClimberSet(ClimberConstants.kClimberVoltage));
-		addSequential(new ClimberCurrent(ClimberConstants.kHoldCurrent));
+		//addSequential(new ClimberCurrent(ClimberConstants.kHoldCurrent));
 	}
 }

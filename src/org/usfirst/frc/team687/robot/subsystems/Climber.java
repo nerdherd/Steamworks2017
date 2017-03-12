@@ -30,7 +30,7 @@ public class Climber extends Subsystem {
 		//m_climber.changeControlMode(TalonControlMode.Voltage);
 		//m_climber.set(pow);
 		m_climber.changeControlMode(TalonControlMode.PercentVbus);
-		m_climber.set(1);
+		m_climber.set(pow);
 	}
 	
 	public void setCurrent(double current)	{
