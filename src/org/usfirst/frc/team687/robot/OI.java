@@ -8,6 +8,7 @@ import org.usfirst.frc.team687.robot.commands.auto.*;
 import org.usfirst.frc.team687.robot.commands.climber.*;
 import org.usfirst.frc.team687.robot.commands.drive.*;
 import org.usfirst.frc.team687.robot.commands.gearmanip.*;
+import org.usfirst.frc.team687.robot.commands.gearintake.*;
 //import org.usfirst.frc.team687.robot.commands.vision.VisionStream;
 import org.usfirst.frc.team687.robot.constants.*;
 
@@ -29,12 +30,18 @@ public class OI {
 	public JoystickButton climberUp;
 	public JoystickButton climberDown;
 	public JoystickButton climberClear;
-	public JoystickButton gearManipUp;
-	public JoystickButton gearManipMid;
-	public JoystickButton gearManipDown;
-	public JoystickButton gearManipManual;
-	public JoystickButton dropGearBackOff;
-	public JoystickButton gearClear;
+//	public JoystickButton gearManipUp;
+//	public JoystickButton gearManipMid;
+//	public JoystickButton gearManipDown;
+//	public JoystickButton gearManipManual;
+//	public JoystickButton dropGearBackOff;
+//	public JoystickButton gearClear;
+	
+	public JoystickButton lowerIntake;
+	public JoystickButton lowerSpinIntake;
+	public JoystickButton raiseIntakeHold;
+	public JoystickButton outtakeGear;
+	
 	public JoystickButton shiftUpOperator;
 	public JoystickButton shiftDownOperator;
 	
@@ -56,16 +63,25 @@ public class OI {
 //		driveClear.cancelWhenPressed(Robot.drive.getCurrentCommand());
 
 		// Artic Joystick
-		gearManipManual = new JoystickButton(articJoy, 1);
-		gearManipManual.whileHeld(new GearManualControl());
-		gearManipUp = new JoystickButton(articJoy, 7);
-		gearManipUp.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipUpPos));
-		gearManipMid = new JoystickButton(articJoy, 9);
-		gearManipMid.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipMidPos));
-		gearManipDown = new JoystickButton(articJoy, 11);
-		gearManipDown.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipDownPos));
+//		gearManipManual = new JoystickButton(articJoy, 1);
+//		gearManipManual.whileHeld(new GearManualControl());
+//		gearManipUp = new JoystickButton(articJoy, 7);
+//		gearManipUp.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipUpPos));
+//		gearManipMid = new JoystickButton(articJoy, 9);
+//		gearManipMid.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipMidPos));
+//		gearManipDown = new JoystickButton(articJoy, 11);
+//		gearManipDown.whenPressed(new SetGearManipNoTimer(GearManipulationConstants.kGearManipDownPos));
 //		gearClear = new JoystickButton(articJoy, 2);
 //		gearClear.cancelWhenPressed(Robot.gearManip.getCurrentCommand());
+		
+		lowerIntake = new JoystickButton(articJoy, 9);
+		lowerIntake.whenPressed(new IntakeSetPosition(GearIntakeConstants.kGearIntakeDownPos));
+		lowerSpinIntake = new JoystickButton(articJoy, 10);
+		lowerSpinIntake.whenPressed(new IntakeDownSpin());
+		raiseIntakeHold = new JoystickButton(articJoy, 7);
+		raiseIntakeHold.whenPressed(new IntakeTuckRetain());
+		outtakeGear = new JoystickButton(articJoy, 8);
+		outtakeGear.whenPressed(new Outtake());
 		
 		shiftUpOperator = new JoystickButton(articJoy, 4);
 		shiftUpOperator.whenPressed(new ShiftUp());

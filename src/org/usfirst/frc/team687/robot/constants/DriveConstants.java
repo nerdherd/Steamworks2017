@@ -29,10 +29,10 @@ public class DriveConstants {
 	public final static double kDriveFeetToEncoderUnitsL = 4.487*3/(Math.PI);
 	public final static double kDriveStraightP = 0.018;
 	
-	public static double kDistanceMidAuto = 6.6;
+	public static double kDistanceMidAuto = 9; //was 6.6
 	
-	public static double kDistanceFeederAuto1 = 7.25;
-	public static double kDistanceFeederAuto2 = 2.5; //was 2.25
+	public static double kDistanceFeederAuto1 = 7.5; //was 7.25
+	public static double kDistanceFeederAuto2 = 8; //was 2.25
 	public static double kAngleFeederAutoBlue = 62.5;
 	public static double kAngleFeederAutoRed = -62.5;
 	public static double kAngleBoilerAutoBlue = 62.5;

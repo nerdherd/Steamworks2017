@@ -6,9 +6,11 @@ import org.usfirst.frc.team687.robot.commands.drive.DriveTurnToAngle;
 import org.usfirst.frc.team687.robot.constants.DriveConstants;
 import org.usfirst.frc.team687.robot.subsystems.Climber;
 import org.usfirst.frc.team687.robot.subsystems.Drive;
+import org.usfirst.frc.team687.robot.subsystems.GearIntake;
 import org.usfirst.frc.team687.robot.subsystems.GearManipulation;
 import org.usfirst.frc.team687.robot.subsystems.Vision;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -28,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static Climber climber;
 	public static Drive drive;
 	public static GearManipulation gearManip;
+	public static GearIntake gearIntake;
 	
 	final String autoRedMiddle = "RedMiddle";
 	final String autoRedBoiler = "RedBoiler";
@@ -48,7 +51,8 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		drive.resetEncoders();
 		drive.resetGyro();
-		gearManip = new GearManipulation();
+//		gearManip = new GearManipulation();
+		gearIntake = new GearIntake();
 		vision = new Vision();		
 
 		oi = new OI();
@@ -57,6 +61,8 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		
 		pdp = new PowerDistributionPanel();
+		
+		CameraServer.getInstance().startAutomaticCapture();
 		
 		autoChooser.addDefault("Do Nothing", autoDoNothing);
 		autoChooser.addObject("Red Middle", autoRedMiddle);	
@@ -70,6 +76,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Distance Feeder Auto 1", DriveConstants.kDistanceFeederAuto1);
 		SmartDashboard.putNumber("Distance Feeder Auto 2", DriveConstants.kDistanceFeederAuto2);
 		SmartDashboard.putNumber("Distance Mid Auto", DriveConstants.kDistanceMidAuto);
+		
 	}
 	
 	@Override
@@ -124,7 +131,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData("pdp", pdp);
 		drive.reportState();
-		gearManip.reportState();
+//		gearManip.reportState();
+		gearIntake.reportState();
 		climber.reportState();
     }
 	
