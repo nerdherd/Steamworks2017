@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
+import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.gearintake.IntakeSetPosition;
 import org.usfirst.frc.team687.robot.constants.GearIntakeConstants;
@@ -15,12 +16,14 @@ public class GearIntake extends Subsystem {
 	private CANTalon m_gearArtic;
 	private CANTalon m_gearSpin;
 	
+	private double m_target;
+	private double m_lastPos = 0;
+	
 	public GearIntake() {
 		m_gearArtic = new CANTalon(RobotMap.gearArticPort);
 		m_gearSpin = new CANTalon(RobotMap.gearSpinPort);
 		
 		m_gearArtic.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
-		m_gearArtic.changeControlMode(TalonControlMode.Position);
 		
 		m_gearArtic.setP(GearIntakeConstants.kGearIntakeP);
 		m_gearArtic.setI(GearIntakeConstants.kGearIntakeI);
@@ -34,8 +37,25 @@ public class GearIntake extends Subsystem {
 		m_gearSpin.set(pow);
 	}
 	
+	public void setArticVoltage(double pow) {
+		m_gearArtic.changeControlMode(TalonControlMode.Voltage);
+		m_gearArtic.set(pow);
+	}
+	
 	public void setPos(double pos) {
-		m_gearArtic.set(pos);
+		m_gearArtic.changeControlMode(TalonControlMode.Position);
+		m_target = pos*GearIntakeConstants.kIntakeAlpha+m_lastPos*(1-GearIntakeConstants.kIntakeAlpha);
+		m_lastPos = m_target;
+		m_gearArtic.set(m_target);
+	}
+	
+	public void setPercentVoltage(double pow) {
+		m_gearArtic.changeControlMode(TalonControlMode.PercentVbus);
+		m_gearArtic.set(pow);
+	}
+	
+	public void manualControl() {
+		setPercentVoltage(Robot.oi.getArticY());
 	}
 	
 	public double getPos() {
@@ -49,6 +69,6 @@ public class GearIntake extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new IntakeSetPosition(GearIntakeConstants.kGearIntakeUpPos));
+		//setDefaultCommand(new IntakeSetPosition(GearIntakeConstants.kGearIntakeUpPos));
 	}
 }

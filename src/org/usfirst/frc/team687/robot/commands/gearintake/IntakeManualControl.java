@@ -4,23 +4,15 @@ import org.usfirst.frc.team687.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SpinSpeed extends Command {
+public class IntakeManualControl extends Command {
 	
-	private double m_desired;
-	
-	public SpinSpeed(double pow) {
+	public IntakeManualControl() {
 		requires(Robot.gearIntake);
-		m_desired = pow;
 	}
 	
 	@Override
 	public void execute() {
-		Robot.gearIntake.setSpinVoltage(m_desired);
-	}
-	
-	@Override
-	protected void end() {
-		Robot.gearIntake.setSpinVoltage(0);
+		Robot.gearIntake.manualControl();
 	}
 	
 	@Override

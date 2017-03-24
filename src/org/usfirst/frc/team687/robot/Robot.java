@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		drive.resetEncoders();
 		drive.resetGyro();
-//		gearManip = new GearManipulation();
+		gearManip = new GearManipulation();
 		gearIntake = new GearIntake();
 		vision = new Vision();		
 

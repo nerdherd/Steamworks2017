@@ -41,6 +41,8 @@ public class OI {
 	public JoystickButton lowerSpinIntake;
 	public JoystickButton raiseIntakeHold;
 	public JoystickButton outtakeGear;
+	public JoystickButton intakeManual;
+	public JoystickButton spinIntake;
 	
 	public JoystickButton shiftUpOperator;
 	public JoystickButton shiftDownOperator;
@@ -77,11 +79,15 @@ public class OI {
 		lowerIntake = new JoystickButton(articJoy, 9);
 		lowerIntake.whenPressed(new IntakeSetPosition(GearIntakeConstants.kGearIntakeDownPos));
 		lowerSpinIntake = new JoystickButton(articJoy, 10);
-		lowerSpinIntake.whenPressed(new IntakeDownSpin());
+		lowerSpinIntake.whenPressed(new IntakeDown());
 		raiseIntakeHold = new JoystickButton(articJoy, 7);
 		raiseIntakeHold.whenPressed(new IntakeTuckRetain());
 		outtakeGear = new JoystickButton(articJoy, 8);
 		outtakeGear.whenPressed(new Outtake());
+		intakeManual = new JoystickButton(articJoy, 1);
+		intakeManual.whileHeld(new IntakeManualControl());
+		spinIntake = new JoystickButton(articJoy, 2);
+		spinIntake.whileHeld(new SpinSpeed(GearIntakeConstants.kGearIntakeSpinVoltage));
 		
 		shiftUpOperator = new JoystickButton(articJoy, 4);
 		shiftUpOperator.whenPressed(new ShiftUp());
