@@ -16,6 +16,6 @@ public class AutoRoutineStartMidBlue extends CommandGroup {
 		// WIGGLE
 		addSequential(new DriveTime(0.25, 0.25, 0.125));
 		addSequential(new DriveTime(-0.25, -0.25, 0.125));
-		addSequential(new Outtake());
+		//addSequential(new Outtake());
 	}
 }

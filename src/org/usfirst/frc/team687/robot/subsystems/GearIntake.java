@@ -17,7 +17,7 @@ public class GearIntake extends Subsystem {
 	private CANTalon m_gearSpin;
 	
 	private double m_target;
-	private double m_lastPos = 0;
+	private double m_lastPos;
 	
 	public GearIntake() {
 		m_gearArtic = new CANTalon(RobotMap.gearArticPort);
@@ -29,8 +29,10 @@ public class GearIntake extends Subsystem {
 		m_gearArtic.setI(GearIntakeConstants.kGearIntakeI);
 		m_gearArtic.setD(GearIntakeConstants.kGearIntakeD);
 		m_gearArtic.setF(GearIntakeConstants.kGearIntakeF);
-
+		m_gearArtic.setCurrentLimit(GearIntakeConstants.kIntakeCurrentLimit);
 		m_gearSpin.changeControlMode(TalonControlMode.Voltage);
+		
+		m_lastPos = m_gearArtic.getPosition();
 	}
 	
 	public void setSpinVoltage(double pow) {

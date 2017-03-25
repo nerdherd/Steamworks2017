@@ -78,15 +78,13 @@ public class OI {
 		
 		lowerIntake = new JoystickButton(articJoy, 9);
 		lowerIntake.whenPressed(new IntakeSetPosition(GearIntakeConstants.kGearIntakeDownPos));
-		lowerSpinIntake = new JoystickButton(articJoy, 10);
-		lowerSpinIntake.whenPressed(new IntakeDown());
 		raiseIntakeHold = new JoystickButton(articJoy, 7);
 		raiseIntakeHold.whenPressed(new IntakeTuckRetain());
-		outtakeGear = new JoystickButton(articJoy, 8);
-		outtakeGear.whenPressed(new Outtake());
+		outtakeGear = new JoystickButton(articJoy, 11);
+		outtakeGear.whileHeld(new Outtake());
 		intakeManual = new JoystickButton(articJoy, 1);
 		intakeManual.whileHeld(new IntakeManualControl());
-		spinIntake = new JoystickButton(articJoy, 2);
+		spinIntake = new JoystickButton(articJoy, 12);
 		spinIntake.whileHeld(new SpinSpeed(GearIntakeConstants.kGearIntakeSpinVoltage));
 		
 		shiftUpOperator = new JoystickButton(articJoy, 4);
@@ -94,7 +92,7 @@ public class OI {
 		shiftDownOperator = new JoystickButton(articJoy, 3);
 		shiftDownOperator.whenPressed(new ShiftDown());
 		
-		climberUp = new JoystickButton(articJoy, 12);
+		climberUp = new JoystickButton(articJoy, 8);
 		climberUp.whileHeld(new Climb());
 		
 		
@@ -109,7 +107,7 @@ public class OI {
 	}
 	
 	public double getLeftY() {
-		return driveLeftJoy.getY();
+		return -driveLeftJoy.getY();
 	}
 	
 	public double getLeftX() {
